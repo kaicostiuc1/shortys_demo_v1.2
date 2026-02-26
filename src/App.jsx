@@ -523,6 +523,20 @@ function Hero() {
           onMouseLeave={(e) => { e.target.style.background = C.red; e.target.style.transform = "translateY(0)"; }}>
             Join the Waitlist
           </a>
+          {/* 🔥 NEW: Flagship Order Online Button */}
+  <a href={LOCATIONS.williamsburg.toastOrderUrl} target="_blank" rel="noopener noreferrer" 
+     style={{ 
+       display: "inline-flex", alignItems: "center", gap: "0.45rem",
+       padding: "0.8rem 1.85rem", background: "rgba(255,255,255,0.9)",
+       color: C.red, fontWeight: 700, fontSize: "1rem", borderRadius: "8px",
+       textDecoration: "none", border: `2px solid ${C.red}`,
+       boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+       transition: "all 0.2s ease"
+     }}
+     onMouseEnter={(e) => { e.target.style.background = C.redLight; }}
+     onMouseLeave={(e) => { e.target.style.background = "rgba(255,255,255,0.9)"; }}>
+    Order Online <ExternalLink size={16} />
+  </a>
           <a href="#menu" style={{
             display: "inline-flex", alignItems: "center", gap: "0.45rem",
             padding: "0.8rem 1.85rem", background: "rgba(255,255,255,0.9)",
