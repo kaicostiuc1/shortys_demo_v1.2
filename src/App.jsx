@@ -16,7 +16,7 @@ import {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const IMG = {
-  interior: "/shortys-interior.jpg",
+  interior: "/hero-diner.jpg",
   neon: "/shortys-neon.jpg",
   elvis: "/shortys-elvis.jpg",
 };
