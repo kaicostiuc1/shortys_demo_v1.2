@@ -485,7 +485,7 @@ function Hero() {
           fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.1em",
           textTransform: "uppercase", marginBottom: "1.5rem",
         }}>
-          <Coffee size={13} /> Williamsburg, VA · `${new Date().getFullYear() - 1980} Years on the Griddle`
+          <Coffee size={13} /> Williamsburg, VA · Since 1980
         </div>
 
         <h1 className="fade-up fd1" style={{
