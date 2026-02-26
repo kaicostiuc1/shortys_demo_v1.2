@@ -507,7 +507,7 @@ function Hero() {
         }}>
           Checkered floors. Red vinyl booths.
           The same griddle since Reagan.
-          <br />Your table's almost ready.
+          <br />It’s not fancy... It’s not fat-free... It’s just the way it used to be.
         </p>
 
         <div className="fade-up fd3" style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
@@ -521,7 +521,7 @@ function Hero() {
           }}
           onMouseEnter={(e) => { e.target.style.background = C.redDark; e.target.style.transform = "translateY(-1px)"; }}
           onMouseLeave={(e) => { e.target.style.background = C.red; e.target.style.transform = "translateY(0)"; }}>
-            Join the Waitlist
+            Put My Name In
           </a>
           {/* 🔥 NEW: Flagship Order Online Button */}
   <a href={LOCATIONS.williamsburg.toastOrderUrl} target="_blank" rel="noopener noreferrer" 
@@ -535,7 +535,7 @@ function Hero() {
      }}
      onMouseEnter={(e) => { e.target.style.background = C.redLight; }}
      onMouseLeave={(e) => { e.target.style.background = "rgba(255,255,255,0.9)"; }}>
-    Order Online <ExternalLink size={16} />
+    Order for Pickup <ExternalLink size={16} />
   </a>
           <a href="#menu" style={{
             display: "inline-flex", alignItems: "center", gap: "0.45rem",
@@ -547,7 +547,7 @@ function Hero() {
           }}
           onMouseEnter={(e) => { e.target.style.background = C.redLight; }}
           onMouseLeave={(e) => { e.target.style.background = "rgba(255,255,255,0.9)"; }}>
-            See the Menu <ArrowDown size={16} />
+            What's Cookin' <ArrowDown size={16} />
           </a>
         </div>
       </div>
