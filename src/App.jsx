@@ -469,11 +469,10 @@ function Hero() {
       <div style={{
         position: "absolute", inset: 0, zIndex: 1,
         background: `linear-gradient(180deg,
-          rgba(30, 15, 8, 0.35) 0%,
-          rgba(30, 15, 8, 0.50) 30%,
-          rgba(30, 15, 8, 0.60) 50%,
-          rgba(251,249,244, 0.70) 75%,
-          ${C.cream} 100%
+          rgba(28, 14, 8, 0.75) 0%,
+          rgba(28, 14, 8, 0.45) 40%,
+          rgba(28, 14, 8, 0.65) 70%,
+          rgba(28, 14, 8, 0.9) 100%
         )`,
       }} />
 
@@ -489,10 +488,14 @@ function Hero() {
           <Coffee size={13} /> Williamsburg, VA · `${new Date().getFullYear() - 1980} Years on the Griddle`
         </div>
 
-        <h1 className="neon-title fade-up fd1" style={{
-          fontSize: "clamp(3.2rem, 11vw, 6.5rem)", lineHeight: 0.92, marginBottom: "1rem",
-          /* Extra shadow for legibility over photo */
-          filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))",
+        <h1 className="fade-up fd1" style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: "clamp(3.5rem, 8vw, 5.5rem)",
+          color: "#ffffff",
+          lineHeight: 1.1,
+          marginBottom: "0.5rem",
+          letterSpacing: "-0.02em",
+          textShadow: "0 4px 12px rgba(0,0,0,0.6)"
         }}>
           Shorty's Diner
         </h1>
