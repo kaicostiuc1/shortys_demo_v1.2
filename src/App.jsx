@@ -486,7 +486,7 @@ function Hero() {
           fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.1em",
           textTransform: "uppercase", marginBottom: "1.5rem",
         }}>
-          <Coffee size={13} /> Williamsburg, VA · Since 1980
+          <Coffee size={13} /> Williamsburg, VA · `${new Date().getFullYear() - 1980} Years on the Griddle`
         </div>
 
         <h1 className="neon-title fade-up fd1" style={{
@@ -505,8 +505,7 @@ function Hero() {
           maxWidth: "500px", margin: "0 auto 2.25rem",
           textShadow: "0 1px 3px rgba(0,0,0,0.7), 0 2px 10px rgba(0,0,0,0.4)",
         }}>
-          Checkered floors. Red vinyl booths.
-          The same griddle since Reagan.
+          
           <br />It’s not fancy... It’s not fat-free... It’s just the way it used to be.
         </p>
 
