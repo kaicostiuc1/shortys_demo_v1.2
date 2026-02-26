@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Clock, Users, Phone, User, ChevronDown, MapPin, Wifi,
   Instagram, Facebook, Twitter, Star, Coffee, Flame, Leaf, Egg,
-  ArrowDown, Check, Loader2, UtensilsCrossed, Heart, Sunrise, Sun,
+  ArrowDown, Check, Loader2, UtensilsCrossed, Heart, Sunrise, Sun, 
+  ExternalLink, CalendarDays, ChevronRight, Building2
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -27,6 +28,44 @@ const C = {
   border: "#e0d8ca", textDark: "#2c1810", textMid: "#5c4a3a",
   textLight: "#8b7d6e", brownMuted: "#8b7355", white: "#ffffff",
 };
+
+//----LOCATIONS----------------------------------------------------------------
+const LOCATIONS = {
+  williamsburg: {
+    id: "williamsburg",
+    name: "Williamsburg",
+    label: "The Original · Est. 1980",
+    address: "627 Merrimac Trail",
+    city: "Williamsburg, VA 23185",
+    phone: "(757) 253-1080",
+    flagship: true,
+    // Flagship uses on-site waitlist (WaitlistSection component)
+    toastOrderUrl: "https://order.toasttab.com/online/shortys-diner-627-merrimac-trl",
+  },
+  yorktown: {
+    id: "yorktown",
+    name: "Yorktown",
+    label: "Now Open",
+    address: "6500 George Washington Memorial Hwy A",
+    city: "Yorktown, VA 23692",
+    phone: "(757) 867-8777",
+    flagship: false,
+    // TODO: Replace with actual Toast ordering portal URL
+    toastOrderUrl: "https://order.toasttab.com/online/shortys-diner-yorktown-6500-george-washington-memorial-highway",
+  },
+  richmond: {
+    id: "richmond",
+    name: "Richmond",
+    label: "Now Open",
+    address: "5625 W Broad St",
+    city: "Richmond, VA 23230",
+    phone: "(804) 308-2070",
+    flagship: false,
+    // TODO: Replace with actual Toast ordering portal URL
+    toastOrderUrl: "https://shortysdinerbroad.toast.site/order/shortys-diner-rva-5625-west-broad-street",
+  },
+};
+
 
 // ─── REAL MENU DATA (from Shorty's Diner May 2024 menus) ────────────────────
 
@@ -220,12 +259,33 @@ function MiniChecker({ height = 5, count = 70 }) {
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [locOpen, setLocOpen] = useState(false);
+  const dropRef = useRef(null);
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const fn = (e) => {
+      if (dropRef.current && !dropRef.current.contains(e.target)) setLocOpen(false);
+    };
+    document.addEventListener("mousedown", fn);
+    return () => document.removeEventListener("mousedown", fn);
+  }, []);
+
   const lc = scrolled ? C.textMid : "#fff";
+  const txtShadow = scrolled ? "none" : "0 1px 4px #00000070";
+
+  const linkStyle = {
+    color: lc, textDecoration: "none", fontSize: "0.9rem",
+    fontWeight: 600, transition: "color 0.2s", textShadow: txtShadow,
+    background: "none", border: "none", cursor: "pointer",
+    fontFamily: "'DM Sans', sans-serif", padding: 0,
+  };
 
   return (
     <nav style={{
@@ -237,15 +297,154 @@ function Navbar() {
       borderBottom: scrolled ? `3px solid ${C.red}` : "3px solid transparent",
       transition: "all 0.3s ease",
     }} role="navigation" aria-label="Main navigation">
-      <a href="#hero" style={{ fontFamily: "'Boogaloo', cursive", fontSize: "1.6rem", color: C.red, textDecoration: "none", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+
+      {/* Logo */}
+      <a href="#hero" style={{
+        fontFamily: "'Boogaloo', cursive", fontSize: "1.6rem", color: C.red,
+        textDecoration: "none", display: "flex", alignItems: "center", gap: "0.3rem",
+      }}>
         <UtensilsCrossed size={18} strokeWidth={2.5} /> Shorty's
       </a>
-      <div style={{ display: "flex", gap: "1.25rem" }}>
-        {[{ l: "Waitlist", h: "#waitlist" }, { l: "Menu", h: "#menu" }, { l: "Visit", h: "#footer" }].map((x) => (
-          <a key={x.h} href={x.h} style={{ color: lc, textDecoration: "none", fontSize: "0.9rem", fontWeight: 600, transition: "color 0.2s", textShadow: scrolled ? "none" : "0 1px 4px #00000070" }}
-            onMouseEnter={(e) => e.target.style.color = C.red}
-            onMouseLeave={(e) => e.target.style.color = lc}>{x.l}</a>
-        ))}
+
+      {/* Nav Links */}
+      <div style={{ display: "flex", gap: "1.1rem", alignItems: "center" }}>
+        {/* Waitlist */}
+        <a href="#waitlist" style={linkStyle}
+          onMouseEnter={(e) => e.target.style.color = C.red}
+          onMouseLeave={(e) => e.target.style.color = lc}>
+          Waitlist
+        </a>
+
+        {/* Menu */}
+        <a href="#menu" style={linkStyle}
+          onMouseEnter={(e) => e.target.style.color = C.red}
+          onMouseLeave={(e) => e.target.style.color = lc}>
+          Menu
+        </a>
+
+        {/* ── Locations Dropdown ── */}
+        <div ref={dropRef} style={{ position: "relative" }}>
+          <button
+            onClick={() => setLocOpen(!locOpen)}
+            aria-expanded={locOpen}
+            aria-haspopup="true"
+            style={{
+              ...linkStyle,
+              display: "flex", alignItems: "center", gap: "0.2rem",
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = C.red}
+            onMouseLeave={(e) => { if (!locOpen) e.currentTarget.style.color = lc; }}
+          >
+            Locations
+            <ChevronDown size={14} style={{
+              transform: locOpen ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.2s",
+            }} />
+          </button>
+
+          {/* Dropdown Panel */}
+          {locOpen && (
+            <div style={{
+              position: "absolute", top: "calc(100% + 10px)", right: 0,
+              background: C.white, border: `2px solid ${C.border}`,
+              borderRadius: "12px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+              minWidth: "260px", overflow: "hidden",
+              animation: "fadeUp 0.2s ease-out",
+            }}>
+              {/* Checkerboard accent bar */}
+              <div style={{ display: "flex", height: "4px" }} aria-hidden="true">
+                {Array.from({ length: 60 }).map((_, i) => (
+                  <div key={i} style={{ flex: 1, minWidth: "4px", background: i % 2 === 0 ? C.red : C.white }} />
+                ))}
+              </div>
+
+              {/* Location Items */}
+              {Object.values(LOCATIONS).map((loc) => (
+                <a
+                  key={loc.id}
+                  href={loc.flagship ? "#footer" : (loc.toastOrderUrl || "#")}
+                  target={loc.flagship ? undefined : "_blank"}
+                  rel={loc.flagship ? undefined : "noopener noreferrer"}
+                  onClick={() => {
+                    setLocOpen(false);
+                    if (loc.flagship) {
+                      document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  style={{
+                    display: "flex", justifyContent: "space-between", alignItems: "center",
+                    padding: "0.8rem 1rem", textDecoration: "none",
+                    borderBottom: `1px solid ${C.border}`,
+                    transition: "background 0.15s", cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = C.redLight}
+                  onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+                >
+                  <div>
+                    <div style={{
+                      fontWeight: 700, fontSize: "0.9rem", color: C.textDark,
+                      display: "flex", alignItems: "center", gap: "0.35rem",
+                    }}>
+                      <MapPin size={13} color={C.red} />
+                      {loc.name}
+                      {loc.flagship && (
+                        <span style={{
+                          fontSize: "0.58rem", fontWeight: 800, background: C.red,
+                          color: "#fff", padding: "0.08rem 0.35rem", borderRadius: "99px",
+                          letterSpacing: "0.03em", textTransform: "uppercase",
+                        }}>Flagship</span>
+                      )}
+                      {!loc.flagship && (
+                        <span style={{
+                          fontSize: "0.58rem", fontWeight: 700, background: "#dcfce7",
+                          color: "#166534", padding: "0.08rem 0.35rem", borderRadius: "99px",
+                        }}>{loc.label}</span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: "0.75rem", color: C.textLight, marginTop: "0.15rem" }}>
+                      {loc.address}, {loc.city}
+                    </div>
+                    <div style={{ fontSize: "0.72rem", color: C.brownMuted, marginTop: "0.1rem" }}>
+                      {loc.phone}
+                    </div>
+                  </div>
+                  <div style={{ flexShrink: 0, marginLeft: "0.75rem" }}>
+                    {loc.flagship ? (
+                      <ChevronRight size={14} color={C.textLight} />
+                    ) : (
+                      <ExternalLink size={13} color={C.red} />
+                    )}
+                  </div>
+                </a>
+              ))}
+
+              {/* Catering CTA */}
+              <a
+                href="#catering"
+                onClick={() => {
+                  setLocOpen(false);
+                  document.getElementById("catering")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                style={{
+                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                  padding: "0.8rem 1rem", textDecoration: "none",
+                  transition: "background 0.15s", cursor: "pointer",
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = C.redLight}
+                onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+              >
+                <div style={{
+                  fontWeight: 700, fontSize: "0.9rem", color: C.textDark,
+                  display: "flex", alignItems: "center", gap: "0.35rem",
+                }}>
+                  <CalendarDays size={13} color={C.red} />
+                  Catering & Events
+                </div>
+                <ChevronRight size={14} color={C.textLight} />
+              </a>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );
@@ -704,7 +903,7 @@ function Footer() {
             </div>
             <p style={{ color: C.textMid, fontSize: "0.88rem", lineHeight: 1.5 }}>
               <strong style={{ color: C.textDark }}>Shorty's Diner</strong><br />
-              1137 Jamestown Rd<br />Williamsburg, VA 23185
+              627 Merrimac Trail<br />Williamsburg, VA 23185
             </p>
           </div>
           <div>
