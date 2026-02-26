@@ -521,7 +521,7 @@ function Hero() {
           }}
           onMouseEnter={(e) => { e.target.style.background = C.redDark; e.target.style.transform = "translateY(-1px)"; }}
           onMouseLeave={(e) => { e.target.style.background = C.red; e.target.style.transform = "translateY(0)"; }}>
-            Put My Name In
+            Join the Waitlist
           </a>
           {/* 🔥 NEW: Flagship Order Online Button */}
   <a href={LOCATIONS.williamsburg.toastOrderUrl} target="_blank" rel="noopener noreferrer" 
