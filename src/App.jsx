@@ -3,7 +3,7 @@ import {
   Clock, Users, Phone, User, ChevronDown, MapPin, Wifi,
   Instagram, Facebook, Twitter, Star, Coffee, Flame, Leaf, Egg,
   ArrowDown, Check, Loader2, UtensilsCrossed, Heart, Sunrise, Sun, 
-  ExternalLink, CalendarDays, ChevronRight, Building2
+  ExternalLink, CalendarDays, ChevronRight, Building2, Lock, Unlock, Eye, EyeOff
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -183,20 +183,17 @@ export default function App() {
     <>
       <style>{globalCSS}</style>
       <div style={{ background: C.cream, minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", color: C.textDark }}>
-        <Navbar />
+        <Navbar active={isWaitlistActive} />
         <Hero active={isWaitlistActive} />
         <Checker />
-        <WaitlistSection />
-        <Checker />
+        {isWaitlistActive && <WaitlistSection />}
+        {isWaitlistActive && <Checker />}
         <MenuSection />
         <Checker />
         <PhotoStrip />
         <Checker />
         <AboutSection />
-        <Checker />
-        <CateringSection />
-        <AdminPanel isWaitlistActive={isWaitlistActive} setIsWaitlistActive={setIsWaitlistActive} />
-        <Footer />
+        <Footer isWaitlistActive={isWaitlistActive} setIsWaitlistActive={setIsWaitlistActive} />
       </div>
     </>
   );
@@ -225,6 +222,13 @@ const globalCSS = `
     50%     { opacity: 1; }
   }
   @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%     { transform: translateX(-4px); }
+    40%     { transform: translateX(4px); }
+    60%     { transform: translateX(-3px); }
+    80%     { transform: translateX(3px); }
+  }
   .neon-title {
     font-family:'Boogaloo',cursive; color:#e11d48;
     animation: neonWarm 2.8s ease-in-out forwards, neonBreath 4s ease-in-out 2.8s infinite;
@@ -262,7 +266,7 @@ function MiniChecker({ height = 5, count = 70 }) {
 
 // ─── NAVBAR ─────────────────────────────────────────────────────────────────
 
-function Navbar() {
+function Navbar({ active }) {
   const [scrolled, setScrolled] = useState(false);
   const [locOpen, setLocOpen] = useState(false);
   const dropRef = useRef(null);
@@ -314,11 +318,13 @@ function Navbar() {
       {/* Nav Links */}
       <div style={{ display: "flex", gap: "1.1rem", alignItems: "center" }}>
         {/* Waitlist */}
+        {active && (
         <a href="#waitlist" style={linkStyle}
           onMouseEnter={(e) => e.target.style.color = C.red}
           onMouseLeave={(e) => e.target.style.color = lc}>
           Waitlist
         </a>
+        )}
 
         {/* Menu */}
         <a href="#menu" style={linkStyle}
@@ -678,7 +684,7 @@ function WaitlistSection() {
           }}
           onMouseEnter={(e) => { if (status !== "submitting") e.target.style.background = C.redDark; }}
           onMouseLeave={(e) => { if (status !== "submitting") e.target.style.background = C.red; }}>
-            {status === "submitting" ? <><Loader2 size={18} className="spin" /> Saving your spot...</> : "Add My Name — It's Free"}
+            {status === "submitting" ? <><Loader2 size={18} className="spin" /> Saving your spot...</> : "Put My Name In — It's Free"}
           </button>
         </form>
       )}
@@ -907,168 +913,147 @@ function AboutSection() {
   );
 }
 
-// ─── CATERING HUB ──────────────────────────────────────────────────────────
+// ─── ADMIN LOGIN ───────────────────────────────────────────────────────────
 
-function CateringSection() {
-  const cateringLocations = [
-    { name: "Williamsburg", phone: "(757) 229-4848" },
-    { name: "Richmond", phone: "(804) 270-4848" },
-    { name: "Yorktown", phone: "(757) 947-4848" },
-  ];
+function AdminLogin({ isWaitlistActive, setIsWaitlistActive }) {
+  const [stage, setStage] = useState("locked"); // locked | input | authed
+  const [pw, setPw] = useState("");
+  const [shake, setShake] = useState(false);
 
-  return (
-    <section id="catering" style={{ padding: "3.5rem 1.25rem", maxWidth: "660px", margin: "0 auto" }} aria-label="Catering">
-      <div style={{
-        background: C.white, border: `2px solid ${C.border}`, borderRadius: "14px",
-        padding: "2.25rem 1.75rem", boxShadow: "0 1px 12px rgba(0,0,0,0.04)",
-        position: "relative", overflow: "hidden",
-      }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: C.red }} aria-hidden="true" />
-        <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.85rem" }}>
-          <CalendarDays size={18} color={C.red} />
-          <h3 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "1.4rem", color: C.red }}>Shorty's Parties: Hand-delivered Heritage</h3>
-        </div>
-        <p style={{ color: C.textMid, fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
-          Ask for Ms. Bonnie—she'll get your party started right.
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
-          {cateringLocations.map((loc) => (
-            <div key={loc.name} style={{
-              display: "flex", justifyContent: "space-between", alignItems: "center",
-              padding: "0.75rem 1rem", background: C.tan, borderRadius: "10px",
-              border: `1.5px solid ${C.border}`,
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                <MapPin size={14} color={C.red} />
-                <span style={{ fontWeight: 700, fontSize: "0.92rem", color: C.textDark }}>{loc.name}</span>
-              </div>
-              <a href={`tel:${loc.phone.replace(/[^+\d]/g, "")}`} style={{
-                display: "inline-flex", alignItems: "center", gap: "0.3rem",
-                color: C.red, fontWeight: 700, fontSize: "0.9rem", textDecoration: "none",
-              }}>
-                <Phone size={13} /> {loc.phone}
-              </a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── ADMIN PANEL ───────────────────────────────────────────────────────────
-
-function AdminPanel({ isWaitlistActive, setIsWaitlistActive }) {
-  const [authed, setAuthed] = useState(false);
-  const [creds, setCreds] = useState({ username: "", password: "" });
-  const [error, setError] = useState("");
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (creds.username === "admin" && creds.password === "shortys1980") {
-      setAuthed(true);
-      setError("");
+  const handleUnlock = () => {
+    if (pw === "shortys1980") {
+      setStage("authed");
+      setPw("");
     } else {
-      setError("Wrong credentials — try again.");
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+      setPw("");
     }
   };
 
-  const inputStyle = {
-    width: "100%", padding: "0.75rem 1rem", background: "rgba(255,255,255,0.1)",
-    border: "1.5px solid rgba(255,255,255,0.2)", borderRadius: "8px",
-    color: "#fff", fontSize: "0.95rem", fontFamily: "'DM Sans',sans-serif",
-    outline: "none",
-  };
+  if (stage === "locked") {
+    return (
+      <button
+        onClick={() => setStage("input")}
+        aria-label="Admin login"
+        style={{
+          background: "none", border: "none", cursor: "pointer",
+          color: C.textLight, display: "inline-flex", alignItems: "center",
+          gap: "0.25rem", fontSize: "0.7rem", opacity: 0.5,
+          transition: "opacity 0.2s", padding: "0.15rem 0.3rem",
+          borderRadius: "4px", fontFamily: "'DM Sans',sans-serif",
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.opacity = "0.85"}
+        onMouseLeave={(e) => e.currentTarget.style.opacity = "0.5"}
+      >
+        <Lock size={10} /> Admin
+      </button>
+    );
+  }
 
-  return (
-    <section style={{
-      background: "#1c0e08", padding: "2.5rem 1.25rem",
-    }} aria-label="Admin Panel">
-      <div style={{ maxWidth: "440px", margin: "0 auto" }}>
-        <h3 style={{
-          fontFamily: "'Playfair Display', serif", fontSize: "1.5rem",
-          color: "#fff", marginBottom: "1.25rem", textAlign: "center",
-        }}>
-          Staff Only
-        </h3>
-
-        {!authed ? (
-          <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
-            <div>
-              <label style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>Username</label>
-              <input
-                type="text"
-                value={creds.username}
-                onChange={(e) => setCreds((p) => ({ ...p, username: e.target.value }))}
-                style={inputStyle}
-                autoComplete="username"
-              />
-            </div>
-            <div>
-              <label style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>Password</label>
-              <input
-                type="password"
-                value={creds.password}
-                onChange={(e) => setCreds((p) => ({ ...p, password: e.target.value }))}
-                style={inputStyle}
-                autoComplete="current-password"
-              />
-            </div>
-            {error && <p style={{ color: "#f87171", fontSize: "0.85rem", margin: 0 }}>{error}</p>}
-            <button type="submit" style={{
-              padding: "0.75rem", background: C.red, color: "#fff", border: "none",
-              borderRadius: "8px", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer",
-              fontFamily: "'DM Sans',sans-serif", transition: "background 0.2s",
-            }}
-            onMouseEnter={(e) => e.target.style.background = C.redDark}
-            onMouseLeave={(e) => e.target.style.background = C.red}>
-              Sign In
-            </button>
-          </form>
-        ) : (
-          <div style={{ textAlign: "center" }}>
-            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.88rem", marginBottom: "1.25rem" }}>
-              Manage the front-of-house from here.
-            </p>
-            <div style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              background: "rgba(255,255,255,0.07)", border: "1.5px solid rgba(255,255,255,0.12)",
-              borderRadius: "12px", padding: "1rem 1.25rem",
-            }}>
-              <div style={{ textAlign: "left" }}>
-                <div style={{ color: "#fff", fontWeight: 700, fontSize: "0.95rem" }}>Waitlist Status</div>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem", marginTop: "0.15rem" }}>
-                  {isWaitlistActive ? "Accepting names" : "Turned off — button hidden"}
-                </div>
-              </div>
-              <button
-                onClick={() => setIsWaitlistActive((prev) => !prev)}
-                aria-label={`Toggle waitlist ${isWaitlistActive ? "off" : "on"}`}
-                style={{
-                  position: "relative", width: "52px", height: "28px",
-                  borderRadius: "99px", border: "none", cursor: "pointer",
-                  background: isWaitlistActive ? "#22c55e" : "rgba(255,255,255,0.2)",
-                  transition: "background 0.25s ease", flexShrink: 0,
-                }}>
-                <div style={{
-                  position: "absolute", top: "3px",
-                  left: isWaitlistActive ? "27px" : "3px",
-                  width: "22px", height: "22px", borderRadius: "50%",
-                  background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
-                  transition: "left 0.25s ease",
-                }} />
-              </button>
-            </div>
-          </div>
-        )}
+  if (stage === "input") {
+    return (
+      <div style={{
+        display: "inline-flex", alignItems: "center", gap: "0.35rem",
+        animation: shake ? "shake 0.4s ease-in-out" : "none",
+      }}>
+        <Lock size={10} color={C.textLight} />
+        <input
+          type="password"
+          placeholder="Password"
+          value={pw}
+          onChange={(e) => setPw(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") handleUnlock(); if (e.key === "Escape") { setStage("locked"); setPw(""); } }}
+          autoFocus
+          style={{
+            width: "100px", padding: "0.2rem 0.45rem", fontSize: "0.72rem",
+            border: `1.5px solid ${C.border}`, borderRadius: "5px",
+            background: C.white, color: C.textDark, outline: "none",
+            fontFamily: "'DM Sans',sans-serif",
+          }}
+          onFocus={(e) => e.target.style.borderColor = C.red}
+          onBlur={(e) => e.target.style.borderColor = C.border}
+        />
+        <button
+          onClick={handleUnlock}
+          style={{
+            background: C.red, color: "#fff", border: "none",
+            borderRadius: "5px", padding: "0.2rem 0.5rem",
+            fontSize: "0.7rem", fontWeight: 700, cursor: "pointer",
+            fontFamily: "'DM Sans',sans-serif", transition: "background 0.2s",
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = C.redDark}
+          onMouseLeave={(e) => e.currentTarget.style.background = C.red}
+        >
+          Go
+        </button>
+        <button
+          onClick={() => { setStage("locked"); setPw(""); }}
+          style={{
+            background: "none", border: "none", cursor: "pointer",
+            color: C.textLight, fontSize: "0.7rem", padding: "0.15rem",
+            fontFamily: "'DM Sans',sans-serif",
+          }}
+        >
+          ✕
+        </button>
       </div>
-    </section>
+    );
+  }
+
+  // authed — show toggle
+  return (
+    <div style={{
+      display: "inline-flex", alignItems: "center", gap: "0.5rem",
+      background: C.white, border: `1.5px solid ${C.border}`, borderRadius: "8px",
+      padding: "0.3rem 0.65rem",
+    }}>
+      <Unlock size={10} color="#16a34a" />
+      <span style={{ fontSize: "0.72rem", color: C.textMid, fontWeight: 600 }}>Waitlist</span>
+      <button
+        onClick={() => setIsWaitlistActive(!isWaitlistActive)}
+        aria-label={`Turn waitlist ${isWaitlistActive ? "off" : "on"}`}
+        style={{
+          position: "relative", width: "34px", height: "18px",
+          borderRadius: "99px", border: "none", cursor: "pointer",
+          background: isWaitlistActive ? C.red : C.border,
+          transition: "background 0.25s ease",
+          flexShrink: 0,
+        }}
+      >
+        <div style={{
+          position: "absolute", top: "2px",
+          left: isWaitlistActive ? "17px" : "2px",
+          width: "14px", height: "14px", borderRadius: "50%",
+          background: C.white, boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+          transition: "left 0.25s ease",
+        }} />
+      </button>
+      <span style={{
+        fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.04em",
+        textTransform: "uppercase",
+        color: isWaitlistActive ? "#16a34a" : C.textLight,
+      }}>
+        {isWaitlistActive ? "ON" : "OFF"}
+      </span>
+      <button
+        onClick={() => setStage("locked")}
+        style={{
+          background: "none", border: "none", cursor: "pointer",
+          color: C.textLight, fontSize: "0.65rem", padding: "0.1rem",
+          marginLeft: "0.15rem", fontFamily: "'DM Sans',sans-serif",
+        }}
+        aria-label="Lock admin panel"
+      >
+        <Lock size={10} />
+      </button>
+    </div>
   );
 }
 
 // ─── FOOTER ─────────────────────────────────────────────────────────────────
 
-function Footer() {
+function Footer({ isWaitlistActive, setIsWaitlistActive }) {
   return (
     <footer id="footer" style={{ background: C.tan }} role="contentinfo">
       <Checker />
@@ -1120,7 +1105,10 @@ function Footer() {
         </div>
         <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "1rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.4rem" }}>
           <p style={{ color: C.textLight, fontSize: "0.75rem" }}>© {new Date().getFullYear()} Shorty's Diner · Williamsburg, VA · Menu prices from May 2024</p>
-          <div style={{ fontFamily: "'Boogaloo',cursive", color: C.red, fontSize: "1rem" }}>Shorty's</div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <AdminLogin isWaitlistActive={isWaitlistActive} setIsWaitlistActive={setIsWaitlistActive} />
+            <div style={{ fontFamily: "'Boogaloo',cursive", color: C.red, fontSize: "1rem" }}>Shorty's</div>
+          </div>
         </div>
       </div>
     </footer>
