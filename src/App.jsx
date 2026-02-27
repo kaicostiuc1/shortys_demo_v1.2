@@ -177,12 +177,14 @@ const partiesAhead = Math.round(currentWait / 3);
 // ─── APP ────────────────────────────────────────────────────────────────────
 
 export default function App() {
+  const [isWaitlistActive, setIsWaitlistActive] = useState(true);
+
   return (
     <>
       <style>{globalCSS}</style>
       <div style={{ background: C.cream, minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", color: C.textDark }}>
         <Navbar />
-        <Hero />
+        <Hero active={isWaitlistActive} />
         <Checker />
         <WaitlistSection />
         <Checker />
@@ -191,6 +193,9 @@ export default function App() {
         <PhotoStrip />
         <Checker />
         <AboutSection />
+        <Checker />
+        <CateringSection />
+        <AdminPanel isWaitlistActive={isWaitlistActive} setIsWaitlistActive={setIsWaitlistActive} />
         <Footer />
       </div>
     </>
@@ -452,7 +457,7 @@ function Navbar() {
 
 // ─── HERO (FIXED LEGIBILITY) ────────────────────────────────────────────────
 
-function Hero() {
+function Hero({ active }) {
   return (
     <section id="hero" style={{
       position: "relative", minHeight: "100vh",
@@ -513,6 +518,7 @@ function Hero() {
         </p>
 
         <div className="fade-up fd3" style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
+          {active && (
           <a href="#waitlist" style={{
             display: "inline-flex", alignItems: "center", gap: "0.45rem",
             padding: "0.8rem 1.85rem", background: C.red, color: "#fff",
@@ -523,8 +529,9 @@ function Hero() {
           }}
           onMouseEnter={(e) => { e.target.style.background = C.redDark; e.target.style.transform = "translateY(-1px)"; }}
           onMouseLeave={(e) => { e.target.style.background = C.red; e.target.style.transform = "translateY(0)"; }}>
-            Join the Waitlist
+            Put My Name In
           </a>
+          )}
           {/* 🔥 NEW: Flagship Order Online Button */}
   <a href={LOCATIONS.williamsburg.toastOrderUrl} target="_blank" rel="noopener noreferrer" 
      style={{ 
@@ -895,6 +902,165 @@ function AboutSection() {
           <p style={{ marginBottom: "0.85rem" }}>We finally retired the paper notebook. (Don't worry — Shorty still writes the daily specials by hand. Some things are sacred.) Now your phone does the waiting so you don't have to stand by Elvis.</p>
           <p>Whether you're a William & Mary freshman or a retiree who's had the same booth since the checkered floor was new — pull up a chair. There's always room.</p>
         </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── CATERING HUB ──────────────────────────────────────────────────────────
+
+function CateringSection() {
+  const cateringLocations = [
+    { name: "Williamsburg", phone: "(757) 229-4848" },
+    { name: "Richmond", phone: "(804) 270-4848" },
+    { name: "Yorktown", phone: "(757) 947-4848" },
+  ];
+
+  return (
+    <section id="catering" style={{ padding: "3.5rem 1.25rem", maxWidth: "660px", margin: "0 auto" }} aria-label="Catering">
+      <div style={{
+        background: C.white, border: `2px solid ${C.border}`, borderRadius: "14px",
+        padding: "2.25rem 1.75rem", boxShadow: "0 1px 12px rgba(0,0,0,0.04)",
+        position: "relative", overflow: "hidden",
+      }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: C.red }} aria-hidden="true" />
+        <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.85rem" }}>
+          <CalendarDays size={18} color={C.red} />
+          <h3 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "1.4rem", color: C.red }}>Shorty's Parties: Hand-delivered Heritage</h3>
+        </div>
+        <p style={{ color: C.textMid, fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
+          Ask for Ms. Bonnie—she'll get your party started right.
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+          {cateringLocations.map((loc) => (
+            <div key={loc.name} style={{
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              padding: "0.75rem 1rem", background: C.tan, borderRadius: "10px",
+              border: `1.5px solid ${C.border}`,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                <MapPin size={14} color={C.red} />
+                <span style={{ fontWeight: 700, fontSize: "0.92rem", color: C.textDark }}>{loc.name}</span>
+              </div>
+              <a href={`tel:${loc.phone.replace(/[^+\d]/g, "")}`} style={{
+                display: "inline-flex", alignItems: "center", gap: "0.3rem",
+                color: C.red, fontWeight: 700, fontSize: "0.9rem", textDecoration: "none",
+              }}>
+                <Phone size={13} /> {loc.phone}
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── ADMIN PANEL ───────────────────────────────────────────────────────────
+
+function AdminPanel({ isWaitlistActive, setIsWaitlistActive }) {
+  const [authed, setAuthed] = useState(false);
+  const [creds, setCreds] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (creds.username === "admin" && creds.password === "shortys1980") {
+      setAuthed(true);
+      setError("");
+    } else {
+      setError("Wrong credentials — try again.");
+    }
+  };
+
+  const inputStyle = {
+    width: "100%", padding: "0.75rem 1rem", background: "rgba(255,255,255,0.1)",
+    border: "1.5px solid rgba(255,255,255,0.2)", borderRadius: "8px",
+    color: "#fff", fontSize: "0.95rem", fontFamily: "'DM Sans',sans-serif",
+    outline: "none",
+  };
+
+  return (
+    <section style={{
+      background: "#1c0e08", padding: "2.5rem 1.25rem",
+    }} aria-label="Admin Panel">
+      <div style={{ maxWidth: "440px", margin: "0 auto" }}>
+        <h3 style={{
+          fontFamily: "'Playfair Display', serif", fontSize: "1.5rem",
+          color: "#fff", marginBottom: "1.25rem", textAlign: "center",
+        }}>
+          Staff Only
+        </h3>
+
+        {!authed ? (
+          <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+            <div>
+              <label style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>Username</label>
+              <input
+                type="text"
+                value={creds.username}
+                onChange={(e) => setCreds((p) => ({ ...p, username: e.target.value }))}
+                style={inputStyle}
+                autoComplete="username"
+              />
+            </div>
+            <div>
+              <label style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>Password</label>
+              <input
+                type="password"
+                value={creds.password}
+                onChange={(e) => setCreds((p) => ({ ...p, password: e.target.value }))}
+                style={inputStyle}
+                autoComplete="current-password"
+              />
+            </div>
+            {error && <p style={{ color: "#f87171", fontSize: "0.85rem", margin: 0 }}>{error}</p>}
+            <button type="submit" style={{
+              padding: "0.75rem", background: C.red, color: "#fff", border: "none",
+              borderRadius: "8px", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer",
+              fontFamily: "'DM Sans',sans-serif", transition: "background 0.2s",
+            }}
+            onMouseEnter={(e) => e.target.style.background = C.redDark}
+            onMouseLeave={(e) => e.target.style.background = C.red}>
+              Sign In
+            </button>
+          </form>
+        ) : (
+          <div style={{ textAlign: "center" }}>
+            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.88rem", marginBottom: "1.25rem" }}>
+              Manage the front-of-house from here.
+            </p>
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              background: "rgba(255,255,255,0.07)", border: "1.5px solid rgba(255,255,255,0.12)",
+              borderRadius: "12px", padding: "1rem 1.25rem",
+            }}>
+              <div style={{ textAlign: "left" }}>
+                <div style={{ color: "#fff", fontWeight: 700, fontSize: "0.95rem" }}>Waitlist Status</div>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem", marginTop: "0.15rem" }}>
+                  {isWaitlistActive ? "Accepting names" : "Turned off — button hidden"}
+                </div>
+              </div>
+              <button
+                onClick={() => setIsWaitlistActive((prev) => !prev)}
+                aria-label={`Toggle waitlist ${isWaitlistActive ? "off" : "on"}`}
+                style={{
+                  position: "relative", width: "52px", height: "28px",
+                  borderRadius: "99px", border: "none", cursor: "pointer",
+                  background: isWaitlistActive ? "#22c55e" : "rgba(255,255,255,0.2)",
+                  transition: "background 0.25s ease", flexShrink: 0,
+                }}>
+                <div style={{
+                  position: "absolute", top: "3px",
+                  left: isWaitlistActive ? "27px" : "3px",
+                  width: "22px", height: "22px", borderRadius: "50%",
+                  background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
+                  transition: "left 0.25s ease",
+                }} />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
