@@ -309,164 +309,135 @@ function Navbar({ active }) {
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-      background: scrolled ? "rgba(251,249,244,0.95)" : "transparent",
-      backdropFilter: scrolled ? "blur(10px)" : "none",
-      transition: "all 0.3s ease",
+      backgroundImage: "repeating-conic-gradient(#111111 0% 25%, #ffffff 0% 50%)",
+      backgroundSize: "22px 22px",
+      boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,0.25)" : "0 1px 8px rgba(0,0,0,0.15)",
+      transition: "box-shadow 0.3s ease",
     }} role="navigation" aria-label="Main navigation">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.65rem 1.25rem" }}>
 
-      {/* Logo */}
-      <a href="#hero" style={{
-        fontFamily: "'Boogaloo', cursive", fontSize: "1.6rem", color: C.red,
-        textDecoration: "none", display: "flex", alignItems: "center", gap: "0.3rem",
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "0.65rem 1.25rem",
       }}>
-        <UtensilsCrossed size={18} strokeWidth={2.5} /> Shorty's
-      </a>
 
-      {/* Nav Links */}
-      <div style={{ display: "flex", gap: "1.1rem", alignItems: "center" }}>
-        {/* Waitlist */}
-        {active && (
-        <a href="#waitlist" style={linkStyle}
-          onMouseEnter={(e) => e.target.style.color = C.red}
-          onMouseLeave={(e) => e.target.style.color = lc}>
-          Waitlist
-        </a>
-        )}
-
-        {/* Menu */}
-        <a href="#menu" style={linkStyle}
-          onMouseEnter={(e) => e.target.style.color = C.red}
-          onMouseLeave={(e) => e.target.style.color = lc}>
-          Menu
+        {/* Logo */}
+        <a href="#hero" style={{
+          fontFamily: "'Boogaloo', cursive", fontSize: "1.6rem", color: C.red,
+          textDecoration: "none", display: "flex", alignItems: "center", gap: "0.3rem",
+          filter: "drop-shadow(0 1px 2px rgba(255,255,255,0.8))",
+        }}>
+          <UtensilsCrossed size={18} strokeWidth={2.5} /> Shorty's
         </a>
 
-        {/* ── Locations Dropdown ── */}
-        <div ref={dropRef} style={{ position: "relative" }}>
-          <button
-            onClick={() => setLocOpen(!locOpen)}
-            aria-expanded={locOpen}
-            aria-haspopup="true"
-            style={{
-              ...linkStyle,
-              display: "flex", alignItems: "center", gap: "0.2rem",
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = C.red}
-            onMouseLeave={(e) => { if (!locOpen) e.currentTarget.style.color = lc; }}
-          >
-            Locations
-            <ChevronDown size={14} style={{
-              transform: locOpen ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.2s",
-            }} />
-          </button>
+        {/* Nav Links */}
+        <div style={{ display: "flex", gap: "1.1rem", alignItems: "center" }}>
+          {active && (
+            <a href="#waitlist"
+              style={{ color: C.red, textDecoration: "none", fontSize: "0.9rem", fontWeight: 700, filter: "drop-shadow(0 1px 2px rgba(255,255,255,0.8))", transition: "color 0.2s", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", padding: 0 }}
+              onMouseEnter={(e) => e.target.style.color = C.redDark}
+              onMouseLeave={(e) => e.target.style.color = C.red}>
+              Waitlist
+            </a>
+          )}
 
-          {/* Dropdown Panel */}
-          {locOpen && (
-            <div style={{
-              position: "absolute", top: "calc(100% + 10px)", right: 0,
-              background: C.white, border: `2px solid ${C.border}`,
-              borderRadius: "12px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-              minWidth: "260px", overflow: "hidden",
-              animation: "fadeUp 0.2s ease-out",
-            }}>
-              {/* Checkerboard accent bar */}
-              <div style={{ display: "flex", height: "4px" }} aria-hidden="true">
-                {Array.from({ length: 60 }).map((_, i) => (
-                  <div key={i} style={{ flex: 1, minWidth: "4px", background: i % 2 === 0 ? C.red : C.white }} />
+          <a href="#menu"
+            style={{ color: C.red, textDecoration: "none", fontSize: "0.9rem", fontWeight: 700, filter: "drop-shadow(0 1px 2px rgba(255,255,255,0.8))", transition: "color 0.2s" }}
+            onMouseEnter={(e) => e.target.style.color = C.redDark}
+            onMouseLeave={(e) => e.target.style.color = C.red}>
+            Menu
+          </a>
+
+          {/* Locations Dropdown */}
+          <div ref={dropRef} style={{ position: "relative" }}>
+            <button
+              onClick={() => setLocOpen(!locOpen)}
+              aria-expanded={locOpen}
+              aria-haspopup="true"
+              style={{
+                color: C.red, textDecoration: "none", fontSize: "0.9rem", fontWeight: 700,
+                filter: "drop-shadow(0 1px 2px rgba(255,255,255,0.8))", transition: "color 0.2s",
+                background: "none", border: "none", cursor: "pointer",
+                fontFamily: "'DM Sans', sans-serif", padding: 0,
+                display: "flex", alignItems: "center", gap: "0.2rem",
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = C.redDark}
+              onMouseLeave={(e) => { if (!locOpen) e.currentTarget.style.color = C.red; }}
+            >
+              Locations
+              <ChevronDown size={14} style={{ transform: locOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }} />
+            </button>
+
+            {locOpen && (
+              <div style={{
+                position: "absolute", top: "calc(100% + 10px)", right: 0,
+                background: C.white, border: `2px solid ${C.border}`,
+                borderRadius: "12px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+                minWidth: "260px", overflow: "hidden",
+                animation: "fadeUp 0.2s ease-out",
+              }}>
+                <div style={{ display: "flex", height: "4px" }} aria-hidden="true">
+                  {Array.from({ length: 60 }).map((_, i) => (
+                    <div key={i} style={{ flex: 1, minWidth: "4px", background: i % 2 === 0 ? "#111111" : C.white }} />
+                  ))}
+                </div>
+
+                {Object.values(LOCATIONS).map((loc) => (
+                  <a
+                    key={loc.id}
+                    href={loc.flagship ? "#footer" : (loc.toastOrderUrl || "#")}
+                    target={loc.flagship ? undefined : "_blank"}
+                    rel={loc.flagship ? undefined : "noopener noreferrer"}
+                    onClick={() => {
+                      setLocOpen(false);
+                      if (loc.flagship) document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    style={{
+                      display: "flex", justifyContent: "space-between", alignItems: "center",
+                      padding: "0.8rem 1rem", textDecoration: "none",
+                      borderBottom: `1px solid ${C.border}`,
+                      transition: "background 0.15s", cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.background = C.redLight}
+                    onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+                  >
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: "0.9rem", color: C.textDark, display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                        <MapPin size={13} color={C.red} />
+                        {loc.name}
+                        {loc.flagship && (
+                          <span style={{ fontSize: "0.58rem", fontWeight: 800, background: C.red, color: "#fff", padding: "0.08rem 0.35rem", borderRadius: "99px", letterSpacing: "0.03em", textTransform: "uppercase" }}>Flagship</span>
+                        )}
+                        {!loc.flagship && (
+                          <span style={{ fontSize: "0.58rem", fontWeight: 700, background: "#dcfce7", color: "#166534", padding: "0.08rem 0.35rem", borderRadius: "99px" }}>{loc.label}</span>
+                        )}
+                      </div>
+                      <div style={{ fontSize: "0.75rem", color: C.textLight, marginTop: "0.15rem" }}>{loc.address}, {loc.city}</div>
+                      <div style={{ fontSize: "0.72rem", color: C.brownMuted, marginTop: "0.1rem" }}>{loc.phone}</div>
+                    </div>
+                    <div style={{ flexShrink: 0, marginLeft: "0.75rem" }}>
+                      {loc.flagship ? <ChevronRight size={14} color={C.textLight} /> : <ExternalLink size={13} color={C.red} />}
+                    </div>
+                  </a>
                 ))}
-              </div>
 
-              {/* Location Items */}
-              {Object.values(LOCATIONS).map((loc) => (
                 <a
-                  key={loc.id}
-                  href={loc.flagship ? "#footer" : (loc.toastOrderUrl || "#")}
-                  target={loc.flagship ? undefined : "_blank"}
-                  rel={loc.flagship ? undefined : "noopener noreferrer"}
-                  onClick={() => {
-                    setLocOpen(false);
-                    if (loc.flagship) {
-                      document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
-                  style={{
-                    display: "flex", justifyContent: "space-between", alignItems: "center",
-                    padding: "0.8rem 1rem", textDecoration: "none",
-                    borderBottom: `1px solid ${C.border}`,
-                    transition: "background 0.15s", cursor: "pointer",
-                  }}
+                  href="#catering"
+                  onClick={() => { setLocOpen(false); document.getElementById("catering")?.scrollIntoView({ behavior: "smooth" }); }}
+                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.8rem 1rem", textDecoration: "none", transition: "background 0.15s", cursor: "pointer" }}
                   onMouseEnter={(e) => e.currentTarget.style.background = C.redLight}
                   onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
                 >
-                  <div>
-                    <div style={{
-                      fontWeight: 700, fontSize: "0.9rem", color: C.textDark,
-                      display: "flex", alignItems: "center", gap: "0.35rem",
-                    }}>
-                      <MapPin size={13} color={C.red} />
-                      {loc.name}
-                      {loc.flagship && (
-                        <span style={{
-                          fontSize: "0.58rem", fontWeight: 800, background: C.red,
-                          color: "#fff", padding: "0.08rem 0.35rem", borderRadius: "99px",
-                          letterSpacing: "0.03em", textTransform: "uppercase",
-                        }}>Flagship</span>
-                      )}
-                      {!loc.flagship && (
-                        <span style={{
-                          fontSize: "0.58rem", fontWeight: 700, background: "#dcfce7",
-                          color: "#166534", padding: "0.08rem 0.35rem", borderRadius: "99px",
-                        }}>{loc.label}</span>
-                      )}
-                    </div>
-                    <div style={{ fontSize: "0.75rem", color: C.textLight, marginTop: "0.15rem" }}>
-                      {loc.address}, {loc.city}
-                    </div>
-                    <div style={{ fontSize: "0.72rem", color: C.brownMuted, marginTop: "0.1rem" }}>
-                      {loc.phone}
-                    </div>
+                  <div style={{ fontWeight: 700, fontSize: "0.9rem", color: C.textDark, display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                    <CalendarDays size={13} color={C.red} />
+                    Catering & Events
                   </div>
-                  <div style={{ flexShrink: 0, marginLeft: "0.75rem" }}>
-                    {loc.flagship ? (
-                      <ChevronRight size={14} color={C.textLight} />
-                    ) : (
-                      <ExternalLink size={13} color={C.red} />
-                    )}
-                  </div>
+                  <ChevronRight size={14} color={C.textLight} />
                 </a>
-              ))}
-
-              {/* Catering CTA */}
-              <a
-                href="#catering"
-                onClick={() => {
-                  setLocOpen(false);
-                  document.getElementById("catering")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                style={{
-                  display: "flex", justifyContent: "space-between", alignItems: "center",
-                  padding: "0.8rem 1rem", textDecoration: "none",
-                  transition: "background 0.15s", cursor: "pointer",
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = C.redLight}
-                onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
-              >
-                <div style={{
-                  fontWeight: 700, fontSize: "0.9rem", color: C.textDark,
-                  display: "flex", alignItems: "center", gap: "0.35rem",
-                }}>
-                  <CalendarDays size={13} color={C.red} />
-                  Catering & Events
-                </div>
-                <ChevronRight size={14} color={C.textLight} />
-              </a>
-            </div>
-          )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      </div>
-      <BWChecker height={10} squareSize={10} />
     </nav>
   );
 }
