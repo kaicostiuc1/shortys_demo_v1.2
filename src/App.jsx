@@ -482,9 +482,7 @@ function Hero({ active }) {
       padding: "2rem 1.25rem",
     }} aria-label="Welcome to Shorty's Diner">
 
-      <img src={IMG.interior}
-        alt="Inside Shorty's Diner — checkered floors, red booths, locals enjoying breakfast"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", zIndex: 0 }} />
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, background: "linear-gradient(160deg, #1a0a06 0%, #2c1810 40%, #1a0e0a 70%, #0d0504 100%)" }} />
 
       {/* FIXED: Stronger overlay for text legibility — dark bottom half */}
       <div style={{
@@ -1063,12 +1061,17 @@ function Footer({ isWaitlistActive, setIsWaitlistActive }) {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "2.25rem", marginBottom: "2.25rem" }}>
           <div>
             <h3 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "1.25rem", color: C.red, marginBottom: "0.75rem" }}>Find Us</h3>
-            <div style={{ width: "100%", aspectRatio: "16/10", borderRadius: "8px", background: C.white, border: `2px solid ${C.border}`, position: "relative", overflow: "hidden", marginBottom: "0.75rem" }} role="img" aria-label="Map">
-              <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border}80 1px, transparent 1px), linear-gradient(90deg, ${C.border}80 1px, transparent 1px)`, backgroundSize: "18px 18px" }} />
-              <div style={{ position: "absolute", top: "44%", left: "51%", transform: "translate(-50%,-50%)", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <MapPin size={28} color={C.red} fill={C.red} />
-                <div style={{ marginTop: "0.15rem", background: C.red, color: "#fff", fontSize: "0.6rem", fontWeight: 800, padding: "0.1rem 0.4rem", borderRadius: "3px" }}>SHORTY'S</div>
-              </div>
+            <div style={{ width: "100%", aspectRatio: "16/10", borderRadius: "8px", overflow: "hidden", marginBottom: "0.75rem", border: `2px solid ${C.border}` }}>
+              <iframe
+                title="Shorty's Diner location"
+                src="https://maps.google.com/maps?q=627+Merrimac+Trail,+Williamsburg,+VA+23185&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: "block" }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
             <p style={{ color: C.textMid, fontSize: "0.88rem", lineHeight: 1.5 }}>
               <strong style={{ color: C.textDark }}>Shorty's Diner</strong><br />
