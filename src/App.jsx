@@ -309,13 +309,11 @@ function Navbar({ active }) {
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-      padding: "0.65rem 1.25rem",
-      display: "flex", justifyContent: "space-between", alignItems: "center",
       background: scrolled ? "rgba(251,249,244,0.95)" : "transparent",
       backdropFilter: scrolled ? "blur(10px)" : "none",
-      borderBottom: scrolled ? `3px solid ${C.red}` : "3px solid transparent",
       transition: "all 0.3s ease",
     }} role="navigation" aria-label="Main navigation">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.65rem 1.25rem" }}>
 
       {/* Logo */}
       <a href="#hero" style={{
@@ -467,7 +465,8 @@ function Navbar({ active }) {
           )}
         </div>
       </div>
-      <BWChecker />
+      </div>
+      <BWChecker height={3} squareSize={3} />
     </nav>
   );
 }
@@ -909,7 +908,7 @@ function AboutSection() {
         <div style={{ color: C.textMid, fontSize: "0.95rem", lineHeight: 1.7 }}>
           <p style={{ marginBottom: "0.85rem" }}>We started Shorty's in 1980 with one griddle, one coffee pot, and the belief that if you treat people right and cook honest food, they'll keep coming back. Forty-four years and a lot of coffee later — the philosophy hasn't changed.</p>
           <p style={{ marginBottom: "0.85rem" }}>We finally retired the paper notebook. (Don't worry — Shorty still writes the daily specials by hand. Some things are sacred.) Now your phone does the waiting so you don't have to stand by Elvis.</p>
-          <p>Whether you're a William & Mary freshman or a retiree who's had the same booth since the checkered floor was new — pull up a chair. There's always room.</p>
+          <p>Whether you're a Williamsburg local, a first-time visitor, or a retiree who's had the same booth since the checkered floor was new — pull up a chair. There's always room.</p>
         </div>
       </div>
     </section>
@@ -1059,7 +1058,7 @@ function AdminLogin({ isWaitlistActive, setIsWaitlistActive }) {
 function Footer({ isWaitlistActive, setIsWaitlistActive }) {
   return (
     <footer id="footer" style={{ background: C.tan }} role="contentinfo">
-      <BWChecker />
+      <BWChecker height={14} squareSize={14} />
       <Checker />
       <div style={{ padding: "3rem 1.25rem 1.25rem", maxWidth: "960px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "2.25rem", marginBottom: "2.25rem" }}>
