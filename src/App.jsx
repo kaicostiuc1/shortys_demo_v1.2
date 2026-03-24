@@ -466,7 +466,7 @@ function Navbar({ active }) {
         </div>
       </div>
       </div>
-      <BWChecker height={3} squareSize={3} />
+      <BWChecker height={10} squareSize={10} />
     </nav>
   );
 }
@@ -1059,7 +1059,6 @@ function Footer({ isWaitlistActive, setIsWaitlistActive }) {
   return (
     <footer id="footer" style={{ background: C.tan }} role="contentinfo">
       <BWChecker height={14} squareSize={14} />
-      <Checker />
       <div style={{ padding: "3rem 1.25rem 1.25rem", maxWidth: "960px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "2.25rem", marginBottom: "2.25rem" }}>
           <div>
