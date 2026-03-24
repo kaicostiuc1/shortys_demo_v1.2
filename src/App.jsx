@@ -264,6 +264,16 @@ function MiniChecker({ height = 5, count = 70 }) {
   );
 }
 
+function BWChecker({ height = 8, squareSize = 8 }) {
+  return (
+    <div style={{ display: "flex", width: "100%", height: `${height}px`, overflow: "hidden" }} aria-hidden="true">
+      {Array.from({ length: 100 }).map((_, i) => (
+        <div key={i} style={{ flex: `1 0 ${squareSize}px`, height: `${height}px`, background: i % 2 === 0 ? "#111111" : "#ffffff" }} />
+      ))}
+    </div>
+  );
+}
+
 // ─── NAVBAR ─────────────────────────────────────────────────────────────────
 
 function Navbar({ active }) {
@@ -457,6 +467,7 @@ function Navbar({ active }) {
           )}
         </div>
       </div>
+      <BWChecker />
     </nav>
   );
 }
@@ -710,7 +721,7 @@ function MenuSection() {
           Shorty's Menu
         </h2>
         <p style={{ color: C.textLight, fontSize: "0.95rem", marginBottom: "1.5rem" }}>
-          Breakfast served all day, 6am–2pm · Prices from May 2024
+          Breakfast served all day, 6am–2pm · Prices subject to change
         </p>
 
         {/* Tab Toggle */}
@@ -820,15 +831,7 @@ function MenuCard({ item, tagColors }) {
       onMouseEnter={(e) => { e.currentTarget.style.borderColor = C.red + "40"; e.currentTarget.style.boxShadow = "0 3px 14px rgba(0,0,0,0.04)"; }}
       onMouseLeave={(e) => { if (!open) e.currentTarget.style.borderColor = C.border; e.currentTarget.style.boxShadow = "none"; }}>
 
-      {item.badge && (
-        <div style={{
-          position: "absolute", top: "0.7rem", right: "0.7rem",
-          padding: "0.1rem 0.45rem", background: "#fef3c7", border: "1.5px solid #fbbf2450",
-          borderRadius: "99px", fontSize: "0.65rem", fontWeight: 800, color: "#92400e",
-        }}>⭐ {item.badge}</div>
-      )}
-
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.25rem", paddingRight: item.badge ? "5.5rem" : 0 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.25rem", paddingRight: 0 }}>
         <h4 style={{ fontWeight: 700, fontSize: "0.95rem", color: C.textDark, lineHeight: 1.2 }}>{item.name}</h4>
         <span style={{ fontWeight: 800, fontSize: "0.95rem", color: C.red, whiteSpace: "nowrap", marginLeft: "0.5rem" }}>${item.price}</span>
       </div>
@@ -1056,6 +1059,7 @@ function AdminLogin({ isWaitlistActive, setIsWaitlistActive }) {
 function Footer({ isWaitlistActive, setIsWaitlistActive }) {
   return (
     <footer id="footer" style={{ background: C.tan }} role="contentinfo">
+      <BWChecker />
       <Checker />
       <div style={{ padding: "3rem 1.25rem 1.25rem", maxWidth: "960px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "2.25rem", marginBottom: "2.25rem" }}>
@@ -1104,7 +1108,7 @@ function Footer({ isWaitlistActive, setIsWaitlistActive }) {
           </div>
         </div>
         <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "1rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.4rem" }}>
-          <p style={{ color: C.textLight, fontSize: "0.75rem" }}>© {new Date().getFullYear()} Shorty's Diner · Williamsburg, VA · Menu prices from May 2024</p>
+          <p style={{ color: C.textLight, fontSize: "0.75rem" }}>© {new Date().getFullYear()} Shorty's Diner · Williamsburg, VA</p>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <AdminLogin isWaitlistActive={isWaitlistActive} setIsWaitlistActive={setIsWaitlistActive} />
             <div style={{ fontFamily: "'Boogaloo',cursive", color: C.red, fontSize: "1rem" }}>Shorty's</div>
