@@ -300,8 +300,8 @@ function Navbar({ active }) {
   const txtShadow = scrolled ? "none" : "0 1px 4px #00000070";
 
   const linkStyle = {
-    color: lc, textDecoration: "none", fontSize: "0.9rem",
-    fontWeight: 600, transition: "color 0.2s", textShadow: txtShadow,
+    color: lc, textDecoration: "none", fontSize: "1rem",
+    fontWeight: 800, transition: "color 0.2s", textShadow: txtShadow,
     background: "none", border: "none", cursor: "pointer",
     fontFamily: "'DM Sans', sans-serif", padding: 0,
   };
@@ -317,7 +317,7 @@ function Navbar({ active }) {
 
       {/* Logo */}
       <a href="#hero" style={{
-        fontFamily: "'Boogaloo', cursive", fontSize: "1.6rem", color: C.red,
+        fontFamily: "'Boogaloo', cursive", fontSize: "1.9rem", fontWeight: 700, color: C.red,
         textDecoration: "none", display: "flex", alignItems: "center", gap: "0.3rem",
       }}>
         <UtensilsCrossed size={18} strokeWidth={2.5} /> Shorty's
@@ -325,6 +325,12 @@ function Navbar({ active }) {
 
       {/* Nav Links */}
       <div style={{ display: "flex", gap: "1.1rem", alignItems: "center" }}>
+        <a href="/catering" style={linkStyle}
+          onMouseEnter={(e) => e.target.style.color = C.red}
+          onMouseLeave={(e) => e.target.style.color = lc}>
+          Catering
+        </a>
+
         {/* Waitlist */}
         {active && (
         <a href="#waitlist" style={linkStyle}
