@@ -1044,14 +1044,11 @@ function Footer({ isWaitlistActive, setIsWaitlistActive }) {
             <h3 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "1.25rem", color: C.red, marginBottom: "0.75rem" }}>Find Us</h3>
             <div style={{ width: "100%", aspectRatio: "16/10", borderRadius: "8px", overflow: "hidden", marginBottom: "0.75rem", border: `2px solid ${C.border}` }}>
               <iframe
-                title="Shorty's Diner location"
-                src="https://maps.google.com/maps?q=627+Merrimac+Trail,+Williamsburg,+VA+23185&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0, display: "block" }}
-                allowFullScreen=""
+                src="https://maps.google.com/maps?q=37.2695999,-76.6771245&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                style={{ width: "100%", height: "100%", border: "none", borderRadius: "6px" }}
+                allowFullScreen
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
+                title="Shorty's Diner location"
               />
             </div>
             <p style={{ color: C.textMid, fontSize: "0.88rem", lineHeight: 1.5 }}>
@@ -1061,7 +1058,7 @@ function Footer({ isWaitlistActive, setIsWaitlistActive }) {
           </div>
           <div>
             <h3 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "1.25rem", color: C.red, marginBottom: "0.75rem" }}>Hours</h3>
-            {[{ d: "Mon – Fri", h: "6 AM – 2 PM" }, { d: "Saturday", h: "7 AM – 3 PM" }, { d: "Sunday", h: "7 AM – 2 PM" }].map((r) => (
+            {[{ d: "Monday – Friday", h: "6 AM – 2 PM" }, { d: "Saturday", h: "6 AM – 2 PM" }, { d: "Sunday", h: "6 AM – 2 PM" }].map((r) => (
               <div key={r.d} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.88rem", paddingBottom: "0.4rem", marginBottom: "0.4rem", borderBottom: `1px solid ${C.border}` }}>
                 <span style={{ color: C.textLight }}>{r.d}</span>
                 <span style={{ color: C.textDark, fontWeight: 600 }}>{r.h}</span>
