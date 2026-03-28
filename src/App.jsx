@@ -607,7 +607,7 @@ function WaitlistSection() {
   const lbl = { display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.85rem", color: C.textMid, marginBottom: "0.35rem", fontWeight: 600 };
 
   return (
-    <section id="waitlist" style={{ padding: "3.5rem 1.25rem", maxWidth: "560px", margin: "0 auto" }} aria-label="Join the Waitlist">
+    <section id="waitlist" style={{ padding: "3.5rem 1.25rem", maxWidth: "560px", margin: "0 auto", scrollMarginTop: "70px" }} aria-label="Join the Waitlist">
       <div style={{ textAlign: "center", marginBottom: "1.75rem" }}>
         <h2 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "clamp(1.7rem,5vw,2.4rem)", color: C.red, marginBottom: "0.35rem" }}>Skip the Door, Not the Food</h2>
         <p style={{ color: C.textLight, fontSize: "0.95rem", lineHeight: 1.5 }}>Get on our list from your phone. We'll text you when your table's hot.</p>
@@ -693,7 +693,7 @@ function MenuSection() {
   };
 
   return (
-    <section id="menu" style={{ padding: "3.5rem 1.25rem", maxWidth: "1000px", margin: "0 auto" }} aria-label="Menu">
+    <section id="menu" style={{ padding: "3.5rem 1.25rem", maxWidth: "1000px", margin: "0 auto", scrollMarginTop: "70px" }} aria-label="Menu">
       <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
         <h2 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "clamp(1.7rem,5vw,2.4rem)", color: C.red, marginBottom: "0.25rem" }}>
           Shorty's Menu
@@ -845,7 +845,7 @@ function PhotoStrip() {
     { src: IMG.elvis, caption: "The King greets everyone at the door.", tilt: -1.4 },
   ];
   return (
-    <section id="gallery" style={{ padding: "3.5rem 1.25rem", background: C.tan }} aria-label="Gallery">
+    <section id="gallery" style={{ padding: "3.5rem 1.25rem", background: C.tan, scrollMarginTop: "70px" }} aria-label="Gallery">
       <div style={{ textAlign: "center", marginBottom: "2.25rem" }}>
         <h2 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "clamp(1.7rem,5vw,2.4rem)", color: C.red, marginBottom: "0.35rem" }}>Scenes from the Counter</h2>
         <p style={{ color: C.textLight, fontSize: "0.95rem" }}>Can't fake 44 years of character.</p>
@@ -1036,7 +1036,7 @@ function AdminLogin({ isWaitlistActive, setIsWaitlistActive }) {
 
 function Footer({ isWaitlistActive, setIsWaitlistActive }) {
   return (
-    <footer id="footer" style={{ background: C.tan }} role="contentinfo">
+    <footer id="footer" style={{ background: C.tan, scrollMarginTop: "70px" }} role="contentinfo">
       <BWChecker height={14} squareSize={14} />
       <div style={{ padding: "3rem 1.25rem 1.25rem", maxWidth: "960px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "2.25rem", marginBottom: "2.25rem" }}>
