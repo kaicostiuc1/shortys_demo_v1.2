@@ -839,31 +839,78 @@ function MenuCard({ item, tagColors }) {
 // ─── PHOTO STRIP ────────────────────────────────────────────────────────────
 
 function PhotoStrip() {
-  const photos = [
-    { src: IMG.interior, caption: "The checkered floor. The red booths. Home.", tilt: -2.2 },
-    { src: IMG.neon, caption: "Rock & Roll lives above the griddle.", tilt: 1.6 },
-    { src: IMG.elvis, caption: "The King greets everyone at the door.", tilt: -1.4 },
+  const allPosts = [
+    "C4s3zmiuGYj",
+    "C3iNfyFsT20",
+    "DDUbweBNCFh",
+    "DEAMY_btJKG",
+    "C1SVbKwvs0u",
+    "DCGVSARNr9G",
   ];
+
+  const [posts] = useState(() =>
+    [...allPosts].sort(() => Math.random() - 0.5).slice(0, 3)
+  );
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "//www.instagram.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    script.onload = () => {
+      if (window.instgrm) window.instgrm.Embeds.process();
+    };
+    return () => {
+      if (document.body.contains(script)) document.body.removeChild(script);
+    };
+  }, []);
+
   return (
-    <section id="gallery" style={{ padding: "3.5rem 1.25rem", background: C.tan, scrollMarginTop: "70px" }} aria-label="Gallery">
+    <section id="gallery" style={{ padding: "3.5rem 1.25rem", background: C.white, scrollMarginTop: "70px" }} aria-label="Instagram">
       <div style={{ textAlign: "center", marginBottom: "2.25rem" }}>
-        <h2 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "clamp(1.7rem,5vw,2.4rem)", color: C.red, marginBottom: "0.35rem" }}>Scenes from the Counter</h2>
-        <p style={{ color: C.textLight, fontSize: "0.95rem" }}>Can't fake 44 years of character.</p>
+        <h2 style={{ fontFamily: "'Boogaloo',cursive", fontSize: "clamp(1.7rem,5vw,2.4rem)", color: C.red, marginBottom: "0.5rem" }}>
+          On Instagram
+        </h2>
+        <a
+          href="https://www.instagram.com/shortysdiner/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: C.textLight, fontSize: "0.95rem", textDecoration: "none", fontWeight: 600 }}
+        >
+          @shortysdiner
+        </a>
       </div>
-      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "1.75rem", maxWidth: "920px", margin: "0 auto" }}>
-        {photos.map((p, i) => (
-          <div key={i} style={{
-            background: C.white, padding: "0.6rem 0.6rem 2.25rem", borderRadius: "3px",
-            boxShadow: "0 3px 18px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.05)",
-            transform: `rotate(${p.tilt}deg)`, transition: "transform 0.3s ease, box-shadow 0.3s ease",
-            maxWidth: "270px", width: "100%",
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.transform = "rotate(0deg) scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(0,0,0,0.13)"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.transform = `rotate(${p.tilt}deg) scale(1)`; e.currentTarget.style.boxShadow = "0 3px 18px rgba(0,0,0,0.09)"; }}>
-            <img src={p.src} alt={p.caption} style={{ width: "100%", aspectRatio: i === 2 ? "3/4" : "4/3", objectFit: "cover", borderRadius: "2px", display: "block" }} />
-            <p style={{ fontFamily: "'Boogaloo',cursive", fontSize: "0.95rem", color: C.textMid, textAlign: "center", marginTop: "0.6rem", lineHeight: 1.2 }}>{p.caption}</p>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))",
+        gap: "1.25rem",
+        maxWidth: "960px",
+        margin: "0 auto 1.5rem",
+      }}>
+        {posts.map((id) => (
+          <div key={id} style={{ borderRadius: "10px", overflow: "hidden" }}>
+            <blockquote
+              className="instagram-media"
+              data-instgrm-captioned
+              data-instgrm-permalink={`https://www.instagram.com/p/${id}/?utm_source=ig_embed&utm_campaign=loading`}
+              data-instgrm-version="14"
+              style={{ margin: 0, width: "100%" }}
+            />
           </div>
         ))}
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <a
+          href="https://www.instagram.com/shortysdiner/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: C.red, fontWeight: 700, fontSize: "0.95rem",
+            textDecoration: "none", fontFamily: "'DM Sans', sans-serif",
+          }}
+        >
+          See more on Instagram →
+        </a>
       </div>
     </section>
   );
