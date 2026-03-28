@@ -888,7 +888,13 @@ function PhotoStrip() {
         margin: "0 auto 1.5rem",
       }}>
         {posts.map((id) => (
-          <div key={id} style={{ borderRadius: "10px", overflow: "hidden" }}>
+          <div key={id} style={{
+            borderRadius: "14px",
+            overflow: "hidden",
+            border: `2px solid ${C.red}`,
+            boxShadow: "0 4px 18px rgba(225,29,72,0.10), 0 1px 4px rgba(0,0,0,0.06)",
+            background: C.white,
+          }}>
             <blockquote
               className="instagram-media"
               data-instgrm-captioned
