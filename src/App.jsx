@@ -882,7 +882,7 @@ function PhotoStrip() {
       </div>
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))",
+        gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
         gap: "1.25rem",
         maxWidth: "960px",
         margin: "0 auto 1.5rem",
@@ -893,6 +893,7 @@ function PhotoStrip() {
             overflow: "hidden",
             border: `2px solid ${C.red}`,
             boxShadow: "0 4px 18px rgba(225,29,72,0.10), 0 1px 4px rgba(0,0,0,0.06)",
+            minWidth: 0, maxWidth: "100%",
             background: C.white,
           }}>
             <blockquote
