@@ -849,7 +849,7 @@ function PhotoStrip() {
   ];
 
   const [posts] = useState(() =>
-    [...allPosts].sort(() => Math.random() - 0.5).slice(0, 3)
+    [...allPosts].sort(() => Math.random() - 0.5).slice(0, 2)
   );
 
   useEffect(() => {
