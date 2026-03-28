@@ -3,7 +3,7 @@ import {
   Clock, Users, Phone, User, ChevronDown, MapPin, Wifi,
   Instagram, Facebook, Twitter, Star, Coffee, Flame, Leaf, Egg,
   ArrowDown, Check, Loader2, UtensilsCrossed, Heart, Sunrise, Sun, 
-  ExternalLink, ChevronRight, Building2, Lock, Unlock, Eye, EyeOff
+  ExternalLink, CalendarDays, ChevronRight, Building2, Lock, Unlock, Eye, EyeOff
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -276,7 +276,7 @@ function BWChecker({ height = 8, squareSize = 8 }) {
 
 // ─── NAVBAR ─────────────────────────────────────────────────────────────────
 
-export function Navbar({ active }) {
+function Navbar({ active }) {
   const [scrolled, setScrolled] = useState(false);
   const [locOpen, setLocOpen] = useState(false);
   const dropRef = useRef(null);
@@ -300,8 +300,8 @@ export function Navbar({ active }) {
   const txtShadow = scrolled ? "none" : "0 1px 4px #00000070";
 
   const linkStyle = {
-    color: lc, textDecoration: "none", fontSize: "1rem",
-    fontWeight: 800, transition: "color 0.2s", textShadow: txtShadow,
+    color: lc, textDecoration: "none", fontSize: "0.9rem",
+    fontWeight: 600, transition: "color 0.2s", textShadow: txtShadow,
     background: "none", border: "none", cursor: "pointer",
     fontFamily: "'DM Sans', sans-serif", padding: 0,
   };
@@ -322,7 +322,7 @@ export function Navbar({ active }) {
 
         {/* Logo */}
         <a href="#hero" style={{
-          fontFamily: "'Boogaloo', cursive", fontSize: "1.9rem", fontWeight: 700, color: C.red,
+          fontFamily: "'Boogaloo', cursive", fontSize: "1.6rem", color: C.red,
           textDecoration: "none", display: "flex", alignItems: "center", gap: "0.3rem",
           filter: "drop-shadow(0 1px 2px rgba(255,255,255,0.8))",
         }}>
@@ -331,12 +331,6 @@ export function Navbar({ active }) {
 
         {/* Nav Links */}
         <div style={{ display: "flex", gap: "1.1rem", alignItems: "center" }}>
-          <a href="/catering" style={linkStyle}
-            onMouseEnter={(e) => e.target.style.color = C.red}
-            onMouseLeave={(e) => e.target.style.color = lc}>
-            Catering
-          </a>
-
           {active && (
             <a href="#waitlist"
               style={{ color: C.red, textDecoration: "none", fontSize: "0.9rem", fontWeight: 700, filter: "drop-shadow(0 1px 2px rgba(255,255,255,0.8))", transition: "color 0.2s", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", padding: 0 }}
@@ -425,6 +419,20 @@ export function Navbar({ active }) {
                     </div>
                   </a>
                 ))}
+
+                <a
+                  href="#catering"
+                  onClick={() => { setLocOpen(false); document.getElementById("catering")?.scrollIntoView({ behavior: "smooth" }); }}
+                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.8rem 1rem", textDecoration: "none", transition: "background 0.15s", cursor: "pointer" }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = C.redLight}
+                  onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+                >
+                  <div style={{ fontWeight: 700, fontSize: "0.9rem", color: C.textDark, display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                    <CalendarDays size={13} color={C.red} />
+                    Catering & Events
+                  </div>
+                  <ChevronRight size={14} color={C.textLight} />
+                </a>
               </div>
             )}
           </div>
