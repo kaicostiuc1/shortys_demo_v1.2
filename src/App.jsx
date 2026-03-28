@@ -3,7 +3,7 @@ import {
   Clock, Users, Phone, User, ChevronDown, MapPin, Wifi,
   Instagram, Facebook, Twitter, Star, Coffee, Flame, Leaf, Egg,
   ArrowDown, Check, Loader2, UtensilsCrossed, Heart, Sunrise, Sun, 
-  ExternalLink, CalendarDays, ChevronRight, Building2, Lock, Unlock, Eye, EyeOff
+  ExternalLink, ChevronRight, Building2, Lock, Unlock, Eye, EyeOff
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -442,31 +442,6 @@ function Navbar({ active }) {
                   </div>
                 </a>
               ))}
-
-              {/* Catering CTA */}
-              <a
-                href="#catering"
-                onClick={() => {
-                  setLocOpen(false);
-                  document.getElementById("catering")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                style={{
-                  display: "flex", justifyContent: "space-between", alignItems: "center",
-                  padding: "0.8rem 1rem", textDecoration: "none",
-                  transition: "background 0.15s", cursor: "pointer",
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = C.redLight}
-                onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
-              >
-                <div style={{
-                  fontWeight: 700, fontSize: "0.9rem", color: C.textDark,
-                  display: "flex", alignItems: "center", gap: "0.35rem",
-                }}>
-                  <CalendarDays size={13} color={C.red} />
-                  Catering & Events
-                </div>
-                <ChevronRight size={14} color={C.textLight} />
-              </a>
             </div>
           )}
         </div>
