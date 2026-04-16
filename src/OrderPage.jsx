@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UtensilsCrossed } from "lucide-react";
 
 const C = {
@@ -16,6 +16,23 @@ const C = {
   brownMuted: "#8b7355",
   white: "#ffffff",
 };
+
+const ORDER_LOCATIONS = [
+  { id: "williamsburg", label: "Williamsburg", lat: 37.2696, lng: -76.6771 },
+  { id: "yorktown",     label: "Yorktown",     lat: 37.1299, lng: -76.4772 },
+  { id: "richmond",    label: "Richmond",     lat: 37.5849, lng: -77.5082 },
+  { id: "stlouis",     label: "St. Louis",    lat: 38.6270, lng: -90.1994 },
+];
+
+function distanceMiles(lat1, lng1, lat2, lng2) {
+  const R = 3958.8;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
 
 const CSS = `
   .order-loc-btn {
@@ -72,6 +89,22 @@ const LOCATIONS = [
 
 export default function OrderPage() {
   const [hoveredNav, setHoveredNav] = useState(null);
+  const [nearestOrder, setNearestOrder] = useState(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        let closestId = null, closestDist = Infinity;
+        ORDER_LOCATIONS.forEach(loc => {
+          const d = distanceMiles(latitude, longitude, loc.lat, loc.lng);
+          if (d < closestDist) { closestDist = d; closestId = loc.id; }
+        });
+        setNearestOrder(closestId);
+      },
+      () => {}
+    );
+  }, []);
 
   return (
     <div
@@ -114,7 +147,7 @@ export default function OrderPage() {
           boxSizing: "border-box",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div onClick={() => window.location.href = "/"} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
           <UtensilsCrossed size={20} color="#e11d48" />
           <span
             style={{
@@ -231,8 +264,31 @@ export default function OrderPage() {
             SELECT A LOCATION
           </div>
           {LOCATIONS.map((loc) => (
-            <button key={loc.id} className="order-loc-btn" onClick={() => {}}>
-              <span>{loc.label}</span>
+            <button
+              key={loc.id}
+              className="order-loc-btn"
+              onClick={() => {}}
+              style={nearestOrder === loc.id ? {
+                border: "1px solid #e11d48",
+                boxShadow: "0 0 0 1px #e11d48",
+              } : undefined}
+            >
+              <span>
+                {nearestOrder === loc.id && (
+                  <span style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 9,
+                    color: C.red,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    display: "block",
+                    marginBottom: 4,
+                  }}>
+                    NEAREST TO YOU
+                  </span>
+                )}
+                {loc.label}
+              </span>
               <span style={{ color: C.red }}>→</span>
             </button>
           ))}
