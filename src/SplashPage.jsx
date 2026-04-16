@@ -194,6 +194,48 @@ export default function SplashPage() {
         }}
       />
 
+      {/* Navbar */}
+      <nav
+        style={{
+          width: "100%",
+          background: "transparent",
+          padding: "20px 36px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          position: "relative",
+          zIndex: 10,
+          boxSizing: "border-box",
+        }}
+      >
+        <img src="/shortys-logo.png" height={64} style={{ width: "auto", objectFit: "contain" }} alt="Shorty's Diner" />
+        <div style={{ display: "flex", gap: 28 }}>
+          {[
+            { label: "Menu", onClick: () => { window.location.href = "/williamsburg#menu"; } },
+            { label: "About", onClick: () => { window.location.href = "/about"; } },
+            { label: "Contact", onClick: () => { window.location.href = "mailto:info@shortysdiners.com"; } },
+            { label: "Locations", onClick: () => { document.getElementById("locations-section").scrollIntoView({ behavior: "smooth" }); } },
+          ].map(({ label, onClick }) => (
+            <span
+              key={label}
+              onClick={onClick}
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                color: "rgba(251,249,244,0.85)",
+                cursor: "pointer",
+                textDecoration: "none",
+                textTransform: "uppercase",
+              }}
+            >
+              {label}
+            </span>
+          ))}
+        </div>
+      </nav>
+
       {/* Content */}
       <div
         style={{
@@ -207,43 +249,48 @@ export default function SplashPage() {
           textAlign: "center",
         }}
       >
-        {/* Wordmark */}
-        <h1
+        {/* Hero */}
+        <div
           style={{
-            fontFamily: "'Boogaloo', cursive",
-            fontSize: "clamp(3.5rem, 10vw, 7rem)",
-            color: C.cream,
-            margin: 0,
-            lineHeight: 1,
-            letterSpacing: "0.02em",
-            textShadow: `0 0 40px ${C.red}bb, 0 0 80px ${C.red}55`,
-            animation: "fadeIn 1s ease forwards",
-            opacity: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "60px 24px 40px",
           }}
         >
-          Shorty's Diner
-        </h1>
-
-        {/* Tagline */}
-        <p
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontStyle: "italic",
-            fontSize: "clamp(0.9rem, 2.5vw, 1.2rem)",
-            color: "rgba(251,249,244,0.82)",
-            marginTop: 18,
-            marginBottom: 52,
-            maxWidth: 560,
-            lineHeight: 1.6,
-            animation: "fadeIn 1s ease 0.3s forwards",
-            opacity: 0,
-          }}
-        >
-          "It's not Fancy. It's not Fat Free. It's Just the Way It Used to Be."
-        </p>
+          <img src="/shortys-logo.png" style={{ height: 160, width: "auto" }} alt="Shorty's Diner" />
+          <p
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontStyle: "italic",
+              fontSize: "1rem",
+              color: "rgba(251,249,244,0.55)",
+              marginTop: 20,
+              marginBottom: 0,
+            }}
+          >
+            "It's not Fancy. It's not Fat Free. It's Just the Way It Used to Be."
+          </p>
+          <button
+            onClick={() => document.getElementById("locations-section").scrollIntoView({ behavior: "smooth" })}
+            style={{
+              fontFamily: "'Boogaloo', cursive",
+              fontSize: "1.3rem",
+              color: C.white,
+              background: C.red,
+              padding: "14px 36px",
+              border: "none",
+              borderRadius: 3,
+              cursor: "pointer",
+              marginTop: 24,
+            }}
+          >
+            Find Your Nearest Location
+          </button>
+        </div>
 
         {/* Location cards */}
-        <div className="splash-grid">
+        <div id="locations-section" className="splash-grid">
           {LOCS.map((loc, i) => {
             const isNearest = nearestId === loc.id;
             return (
