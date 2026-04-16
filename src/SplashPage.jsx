@@ -27,7 +27,6 @@ const LOCS = [
     phone: "(757) 253-1080",
     href: "/williamsburg",
     external: false,
-    cta: "Visit Location →",
     lat: 37.2696,
     lng: -76.6771,
   },
@@ -38,9 +37,8 @@ const LOCS = [
     address: "6500 George Washington Memorial Hwy A",
     cityState: "Yorktown, VA 23692",
     phone: "(757) 867-8777",
-    href: "https://order.toasttab.com/online/shortys-diner-yorktown-6500-george-washington-memorial-highway",
-    external: true,
-    cta: "Order Online →",
+    href: "/yorktown",
+    external: false,
     lat: 37.1299,
     lng: -76.4772,
   },
@@ -51,9 +49,8 @@ const LOCS = [
     address: "5625 W Broad St",
     cityState: "Richmond, VA 23230",
     phone: "(804) 308-2070",
-    href: "https://shortysdinerbroad.toast.site/order/shortys-diner-rva-5625-west-broad-street",
-    external: true,
-    cta: "Order Online →",
+    href: "/richmond",
+    external: false,
     lat: 37.5849,
     lng: -77.5082,
   },
@@ -64,9 +61,8 @@ const LOCS = [
     address: null,
     cityState: "St. Louis, MO",
     phone: null,
-    href: null,
+    href: "/stlouis",
     external: false,
-    cta: null,
     lat: 38.627,
     lng: -90.1994,
   },
@@ -134,9 +130,138 @@ function BWChecker() {
   );
 }
 
+function LocationCard({ loc, isNearest, i }) {
+  return (
+    <div
+      className="loc-card"
+      style={{
+        position: "relative",
+        background: "#17100a",
+        border: `1.5px solid ${isNearest ? C.red : "rgba(255,255,255,0.12)"}`,
+        borderRadius: 8,
+        padding: "24px 20px 20px",
+        textAlign: "left",
+        animation: `fadeUp 0.6s ease ${0.5 + i * 0.1}s forwards`,
+        opacity: 0,
+      }}
+    >
+      {isNearest && (
+        <div
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            background: C.red,
+            color: C.white,
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.65rem",
+            fontWeight: 700,
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            padding: "3px 8px",
+            borderRadius: 4,
+            animation: "badgePulse 2s ease-in-out infinite",
+          }}
+        >
+          Nearest to you
+        </div>
+      )}
+
+      <div
+        style={{
+          fontFamily: "'Boogaloo', cursive",
+          fontSize: "1.9rem",
+          color: C.cream,
+          lineHeight: 1.1,
+          marginBottom: 4,
+        }}
+      >
+        {loc.city}
+      </div>
+
+      <div
+        style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "0.68rem",
+          fontWeight: 700,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+          color: C.red,
+          marginBottom: 14,
+        }}
+      >
+        {loc.label}
+      </div>
+
+      <div
+        style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "0.85rem",
+          color: "rgba(251,249,244,0.7)",
+          lineHeight: 1.5,
+          marginBottom: loc.phone ? 4 : 16,
+        }}
+      >
+        {loc.address ? (
+          <>
+            {loc.address}
+            <br />
+          </>
+        ) : null}
+        {loc.cityState}
+      </div>
+
+      {loc.phone && (
+        <div
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.85rem",
+            color: "rgba(251,249,244,0.55)",
+            marginBottom: 18,
+          }}
+        >
+          {loc.phone}
+        </div>
+      )}
+
+      {loc.href ? (
+        <a
+          href={loc.href}
+          style={{
+            display: "inline-block",
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.8rem",
+            fontWeight: 700,
+            letterSpacing: "0.04em",
+            color: C.white,
+            background: C.red,
+            padding: "8px 16px",
+            borderRadius: 4,
+            textDecoration: "none",
+          }}
+        >
+          Visit Location →
+        </a>
+      ) : (
+        <div
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.78rem",
+            color: "rgba(251,249,244,0.35)",
+            fontStyle: "italic",
+          }}
+        >
+          Order Online Coming Soon
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function SplashPage() {
+  const [locationState, setLocationState] = useState("idle");
   const [nearestId, setNearestId] = useState(null);
-  const [showLocations, setShowLocations] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   return (
     <div
@@ -258,26 +383,27 @@ export default function SplashPage() {
             "It's not Fancy. It's not Fat Free. It's Just the Way It Used to Be."
           </p>
           <button
+            disabled={locationState === "loading"}
             onClick={() => {
-              setShowLocations(true);
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                  ({ coords: { latitude, longitude } }) => {
-                    let best = null;
-                    let bestDist = Infinity;
-                    for (const loc of LOCS) {
-                      const d = haversine(latitude, longitude, loc.lat, loc.lng);
-                      if (d < bestDist) {
-                        bestDist = d;
-                        best = loc.id;
-                      }
+              setLocationState("loading");
+              navigator.geolocation.getCurrentPosition(
+                ({ coords: { latitude, longitude } }) => {
+                  let best = null;
+                  let bestDist = Infinity;
+                  for (const loc of LOCS) {
+                    const d = haversine(latitude, longitude, loc.lat, loc.lng);
+                    if (d < bestDist) {
+                      bestDist = d;
+                      best = loc.id;
                     }
-                    setNearestId(best);
-                  },
-                  () => {}
-                );
-              }
-              setTimeout(() => document.getElementById("locations-section")?.scrollIntoView({ behavior: "smooth" }), 100);
+                  }
+                  setNearestId(best);
+                  setLocationState("found");
+                },
+                () => {
+                  setLocationState("denied");
+                }
+              );
             }}
             style={{
               fontFamily: "'Boogaloo', cursive",
@@ -287,154 +413,56 @@ export default function SplashPage() {
               padding: "14px 36px",
               border: "none",
               borderRadius: 3,
-              cursor: "pointer",
+              cursor: locationState === "loading" ? "default" : "pointer",
               marginTop: 24,
+              opacity: locationState === "loading" ? 0.7 : 1,
             }}
           >
-            Find Your Nearest Location
+            {locationState === "loading" ? "Locating..." : "Find Your Nearest Location"}
           </button>
         </div>
 
-        {/* Location cards */}
-        {showLocations && (<div id="locations-section" className="splash-grid">
-          {LOCS.map((loc, i) => {
-            const isNearest = nearestId === loc.id;
-            return (
-              <div
+        {/* Location cards — nearest only */}
+        {locationState === "found" && !showAll && (
+          <div id="locations-section" style={{ width: "100%", maxWidth: 420, margin: "0 auto" }}>
+            <LocationCard
+              loc={LOCS.find((l) => l.id === nearestId)}
+              isNearest={true}
+              i={0}
+            />
+            <button
+              onClick={() => setShowAll(true)}
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                color: "rgba(251,249,244,0.45)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                marginTop: 20,
+                display: "block",
+                textAlign: "center",
+                width: "100%",
+              }}
+            >
+              View Other Locations ↓
+            </button>
+          </div>
+        )}
+
+        {/* Location cards — all */}
+        {((locationState === "found" && showAll) || locationState === "denied") && (
+          <div id="locations-section" className="splash-grid">
+            {LOCS.map((loc, i) => (
+              <LocationCard
                 key={loc.id}
-                className="loc-card"
-                style={{
-                  position: "relative",
-                  background: "#17100a",
-                  border: `1.5px solid ${isNearest ? C.red : "rgba(255,255,255,0.12)"}`,
-                  borderRadius: 8,
-                  padding: "24px 20px 20px",
-                  textAlign: "left",
-                  animation: `fadeUp 0.6s ease ${0.5 + i * 0.1}s forwards`,
-                  opacity: 0,
-                }}
-              >
-                {/* Nearest badge */}
-                {isNearest && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 12,
-                      right: 12,
-                      background: C.red,
-                      color: C.white,
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "0.65rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.06em",
-                      textTransform: "uppercase",
-                      padding: "3px 8px",
-                      borderRadius: 4,
-                      animation: "badgePulse 2s ease-in-out infinite",
-                    }}
-                  >
-                    Nearest to you
-                  </div>
-                )}
-
-                {/* City name */}
-                <div
-                  style={{
-                    fontFamily: "'Boogaloo', cursive",
-                    fontSize: "1.9rem",
-                    color: C.cream,
-                    lineHeight: 1.1,
-                    marginBottom: 4,
-                  }}
-                >
-                  {loc.city}
-                </div>
-
-                {/* Label */}
-                <div
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.68rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: C.red,
-                    marginBottom: 14,
-                  }}
-                >
-                  {loc.label}
-                </div>
-
-                {/* Address */}
-                <div
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.85rem",
-                    color: "rgba(251,249,244,0.7)",
-                    lineHeight: 1.5,
-                    marginBottom: loc.phone ? 4 : 16,
-                  }}
-                >
-                  {loc.address ? (
-                    <>
-                      {loc.address}
-                      <br />
-                    </>
-                  ) : null}
-                  {loc.cityState}
-                </div>
-
-                {/* Phone */}
-                {loc.phone && (
-                  <div
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "0.85rem",
-                      color: "rgba(251,249,244,0.55)",
-                      marginBottom: 18,
-                    }}
-                  >
-                    {loc.phone}
-                  </div>
-                )}
-
-                {/* CTA or coming soon */}
-                {loc.cta ? (
-                  <a
-                    href={loc.href}
-                    target={loc.external ? "_blank" : undefined}
-                    rel={loc.external ? "noopener noreferrer" : undefined}
-                    style={{
-                      display: "inline-block",
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "0.8rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.04em",
-                      color: C.white,
-                      background: C.red,
-                      padding: "8px 16px",
-                      borderRadius: 4,
-                      textDecoration: "none",
-                    }}
-                  >
-                    {loc.cta}
-                  </a>
-                ) : (
-                  <div
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "0.78rem",
-                      color: "rgba(251,249,244,0.35)",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    Order Online Coming Soon
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>)}
+                loc={loc}
+                isNearest={locationState === "found" && nearestId === loc.id}
+                i={i}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* BWChecker at the very bottom */}
