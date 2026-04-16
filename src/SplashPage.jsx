@@ -57,13 +57,13 @@ const LOCS = [
   {
     id: "stlouis",
     city: "St. Louis",
-    label: "Coming Soon",
-    address: null,
-    cityState: "St. Louis, MO",
-    phone: null,
+    label: "Now Open",
+    address: "12004 Lackland Rd",
+    cityState: "St. Louis, MO 63146",
+    phone: "",
     href: "/stlouis",
     external: false,
-    lat: 38.627,
+    lat: 38.6270,
     lng: -90.1994,
   },
 ];
@@ -346,6 +346,7 @@ export default function SplashPage() {
           ))}
         </div>
       </nav>
+      <BWChecker />
 
       {/* Content */}
       <div
