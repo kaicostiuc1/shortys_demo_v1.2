@@ -83,10 +83,6 @@ function haversine(lat1, lng1, lat2, lng2) {
 }
 
 const CSS = `
-  @keyframes kenBurns {
-    from { transform: scale(1.0); }
-    to   { transform: scale(1.08); }
-  }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-12px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -165,32 +161,36 @@ export default function SplashPage() {
         position: "relative",
         minHeight: "100vh",
         overflow: "hidden",
-        backgroundColor: "#0a0705",
+        backgroundColor: "#0d0804",
         display: "flex",
         flexDirection: "column",
       }}
     >
       <style>{CSS}</style>
 
-      {/* Ken Burns background */}
+      {/* Grain texture */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: "url('/van-hero.webp')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          animation: "kenBurns 20s linear forwards",
-          transformOrigin: "center center",
+          zIndex: 1,
+          pointerEvents: "none",
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/feTurbulence%3E%3C/svg%3E\")",
+          opacity: 0.045,
+          mixBlendMode: "overlay",
         }}
       />
 
-      {/* Dark overlay */}
+      {/* Radial glow behind wordmark */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(0,0,0,0.52)",
+          zIndex: 1,
+          pointerEvents: "none",
+          background:
+            "radial-gradient(ellipse 70% 40% at 50% 20%, rgba(225,29,72,0.07) 0%, transparent 70%)",
         }}
       />
 
@@ -198,7 +198,7 @@ export default function SplashPage() {
       <div
         style={{
           position: "relative",
-          zIndex: 10,
+          zIndex: 2,
           flex: 1,
           display: "flex",
           flexDirection: "column",
@@ -385,7 +385,7 @@ export default function SplashPage() {
       </div>
 
       {/* BWChecker at the very bottom */}
-      <div style={{ position: "relative", zIndex: 10 }}>
+      <div style={{ position: "relative", zIndex: 2 }}>
         <BWChecker />
       </div>
     </div>
