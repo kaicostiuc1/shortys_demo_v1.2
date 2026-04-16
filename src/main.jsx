@@ -48,6 +48,6 @@ const path = window.location.pathname;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {path === "/catering" ? <CateringPage /> : path === "/" ? <SplashPage /> : path === "/order" ? <OrderPage /> : path === "/menu" ? <MenuPage /> : path === "/about" ? <AboutPage /> : path === "/yorktown" ? <LocationPage location={LOCATIONS.yorktown} /> : path === "/richmond" ? <LocationPage location={LOCATIONS.richmond} /> : path === "/stlouis" ? <LocationPage location={LOCATIONS.stlouis} /> : <App />}
+    {path === "/catering" ? <CateringPage /> : path === "/" ? <SplashPage /> : path === "/order" ? <OrderPage /> : path === "/menu" ? <MenuPage /> : path === "/about" ? <AboutPage /> : path === "/yorktown" ? <LocationPage location={LOCATIONS.yorktown} /> : path === "/richmond" ? <LocationPage location={LOCATIONS.richmond} /> : path === "/stlouis" ? <LocationPage location={LOCATIONS.stlouis} /> : path === "/williamsburg" ? <LocationPage location={LOCATIONS.williamsburg} /> : path === "/williamsburg-full" ? <App /> : <App />}
   </React.StrictMode>
 );

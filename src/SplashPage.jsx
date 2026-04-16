@@ -94,10 +94,11 @@ const CSS = `
   }
   .splash-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
+    margin: 0 auto;
   }
   @media (max-width: 639px) {
     .splash-grid { grid-template-columns: 1fr; }
@@ -140,7 +141,7 @@ function LocationCard({ loc, isNearest, i }) {
         border: `1.5px solid ${isNearest ? C.red : "rgba(255,255,255,0.12)"}`,
         borderRadius: 8,
         padding: "24px 20px 20px",
-        textAlign: "left",
+        textAlign: "center",
         animation: `fadeUp 0.6s ease ${0.5 + i * 0.1}s forwards`,
         opacity: 0,
       }}
@@ -149,8 +150,9 @@ function LocationCard({ loc, isNearest, i }) {
         <div
           style={{
             position: "absolute",
-            top: 12,
-            right: 12,
+            top: -11,
+            left: "50%",
+            transform: "translateX(-50%)",
             background: C.red,
             color: C.white,
             fontFamily: "'DM Sans', sans-serif",

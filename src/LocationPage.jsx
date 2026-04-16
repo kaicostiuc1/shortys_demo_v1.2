@@ -40,6 +40,7 @@ function BWChecker() {
 export default function LocationPage({ location }) {
   const [hoveredNav, setHoveredNav] = useState(null);
   const [btnHovered, setBtnHovered] = useState(false);
+  const isWilliamsburg = location.city === "Williamsburg";
 
   return (
     <div
@@ -158,6 +159,26 @@ export default function LocationPage({ location }) {
         >
           {location.city}
         </div>
+
+        {isWilliamsburg && (
+          <div
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: C.white,
+              background: C.red,
+              padding: "2px 10px",
+              borderRadius: 20,
+              display: "inline-block",
+              marginBottom: 6,
+            }}
+          >
+            The Original · Est. 1980
+          </div>
+        )}
 
         <div
           style={{
@@ -341,6 +362,22 @@ export default function LocationPage({ location }) {
         >
           "It's not Fancy. It's not Fat Free. It's Just the Way It Used to Be."
         </div>
+
+        {isWilliamsburg && (
+          <div
+            onClick={() => { window.location.href = "/williamsburg-full"; }}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 11,
+              color: "rgba(44,24,16,0.4)",
+              cursor: "pointer",
+              marginTop: 8,
+              textAlign: "center",
+            }}
+          >
+            Full dining experience at this location →
+          </div>
+        )}
       </div>
 
       {/* BWChecker at very bottom */}
