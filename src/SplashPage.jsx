@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { UtensilsCrossed } from "lucide-react";
 
 const C = {
   cream: "#FBF9F4",
@@ -135,25 +136,7 @@ function BWChecker() {
 
 export default function SplashPage() {
   const [nearestId, setNearestId] = useState(null);
-
-  useEffect(() => {
-    if (!navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition(
-      ({ coords: { latitude, longitude } }) => {
-        let best = null;
-        let bestDist = Infinity;
-        for (const loc of LOCS) {
-          const d = haversine(latitude, longitude, loc.lat, loc.lng);
-          if (d < bestDist) {
-            bestDist = d;
-            best = loc.id;
-          }
-        }
-        setNearestId(best);
-      },
-      () => {}
-    );
-  }, []);
+  const [showLocations, setShowLocations] = useState(false);
 
   return (
     <div
@@ -208,13 +191,16 @@ export default function SplashPage() {
           boxSizing: "border-box",
         }}
       >
-        <img src="/shortys-logo.png" height={64} style={{ width: "auto", objectFit: "contain" }} alt="Shorty's Diner" />
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <UtensilsCrossed size={20} color="#e11d48" />
+          <span style={{ fontFamily: "'Boogaloo', cursive", fontSize: "1.4rem", color: "#e11d48", fontWeight: 700 }}>Shorty's</span>
+        </div>
         <div style={{ display: "flex", gap: 28 }}>
           {[
             { label: "Menu", onClick: () => { window.location.href = "/williamsburg#menu"; } },
             { label: "About", onClick: () => { window.location.href = "/about"; } },
             { label: "Contact", onClick: () => { window.location.href = "mailto:info@shortysdiners.com"; } },
-            { label: "Locations", onClick: () => { document.getElementById("locations-section").scrollIntoView({ behavior: "smooth" }); } },
+            { label: "Order", onClick: () => { window.location.href = "/order"; } },
           ].map(({ label, onClick }) => (
             <span
               key={label}
@@ -258,7 +244,7 @@ export default function SplashPage() {
             padding: "60px 24px 40px",
           }}
         >
-          <img src="/shortys-logo.png" style={{ height: 160, width: "auto" }} alt="Shorty's Diner" />
+          <img src="/shortys-logo.png" style={{ maxWidth: "460px", width: "88%", height: "auto" }} alt="Shorty's Diner" />
           <p
             style={{
               fontFamily: "'Playfair Display', serif",
@@ -272,7 +258,27 @@ export default function SplashPage() {
             "It's not Fancy. It's not Fat Free. It's Just the Way It Used to Be."
           </p>
           <button
-            onClick={() => document.getElementById("locations-section").scrollIntoView({ behavior: "smooth" })}
+            onClick={() => {
+              setShowLocations(true);
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                  ({ coords: { latitude, longitude } }) => {
+                    let best = null;
+                    let bestDist = Infinity;
+                    for (const loc of LOCS) {
+                      const d = haversine(latitude, longitude, loc.lat, loc.lng);
+                      if (d < bestDist) {
+                        bestDist = d;
+                        best = loc.id;
+                      }
+                    }
+                    setNearestId(best);
+                  },
+                  () => {}
+                );
+              }
+              setTimeout(() => document.getElementById("locations-section")?.scrollIntoView({ behavior: "smooth" }), 100);
+            }}
             style={{
               fontFamily: "'Boogaloo', cursive",
               fontSize: "1.3rem",
@@ -290,7 +296,7 @@ export default function SplashPage() {
         </div>
 
         {/* Location cards */}
-        <div id="locations-section" className="splash-grid">
+        {showLocations && (<div id="locations-section" className="splash-grid">
           {LOCS.map((loc, i) => {
             const isNearest = nearestId === loc.id;
             return (
@@ -428,7 +434,7 @@ export default function SplashPage() {
               </div>
             );
           })}
-        </div>
+        </div>)}
       </div>
 
       {/* BWChecker at the very bottom */}
