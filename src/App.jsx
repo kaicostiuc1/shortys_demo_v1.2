@@ -316,7 +316,7 @@ function Navbar({ active }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.65rem 1.25rem" }}>
 
       {/* Logo */}
-      <a href="#hero" style={{
+      <a href="/" style={{
         fontFamily: "'Boogaloo', cursive", fontSize: "1.9rem", fontWeight: 700, color: C.red,
         textDecoration: "none", display: "flex", alignItems: "center", gap: "0.3rem",
       }}>
@@ -387,9 +387,7 @@ function Navbar({ active }) {
               {Object.values(LOCATIONS).map((loc) => (
                 <a
                   key={loc.id}
-                  href={loc.flagship ? "#footer" : (loc.toastOrderUrl || "#")}
-                  target={loc.flagship ? undefined : "_blank"}
-                  rel={loc.flagship ? undefined : "noopener noreferrer"}
+                  href={loc.flagship ? "#footer" : `/${loc.id}`}
                   onClick={() => {
                     setLocOpen(false);
                     if (loc.flagship) {
