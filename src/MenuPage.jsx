@@ -141,14 +141,14 @@ function MenuItem({ item }) {
   return (
     <div
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: "#ffffff",
+        border: "1px solid #e0d8ca",
         borderRadius: 4,
         padding: 16,
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
-        <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700, color: C.cream }}>
+        <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700, color: "#2c1810" }}>
           {item.name}
         </span>
         <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700, color: C.red, flexShrink: 0 }}>
@@ -160,7 +160,7 @@ function MenuItem({ item }) {
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 12,
-            color: "rgba(251,249,244,0.5)",
+            color: "#8b7d6e",
             marginTop: 6,
             lineHeight: 1.5,
           }}
@@ -212,30 +212,17 @@ export default function MenuPage() {
       style={{
         position: "relative",
         minHeight: "100vh",
-        backgroundColor: "#0d0804",
+        backgroundColor: "#FBF9F4",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      {/* Grain texture */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/feTurbulence%3E%3C/svg%3E\")",
-          opacity: 0.045,
-          mixBlendMode: "overlay",
-        }}
-      />
-
       {/* Navbar */}
       <nav
         style={{
           width: "100%",
-          background: "transparent",
+          background: "rgba(251,249,244,0.95)",
+          backdropFilter: "blur(8px)",
           padding: "20px 36px",
           display: "flex",
           justifyContent: "space-between",
@@ -268,14 +255,16 @@ export default function MenuPage() {
                 fontSize: 13,
                 fontWeight: 700,
                 letterSpacing: "0.06em",
-                color: hoveredNav === label ? "#ffffff" : active ? C.red : "rgba(251,249,244,0.85)",
+                color: hoveredNav === label ? "#e11d48" : active ? C.red : "#5c4a3a",
                 cursor: onClick ? "pointer" : "default",
                 textDecoration: "none",
                 textTransform: "uppercase",
-                boxShadow: hoveredNav === label ? "0 0 0 1.5px #e11d48" : "none",
+                background: hoveredNav === label ? "rgba(225,29,72,0.06)" : "transparent",
+                border: "none",
+                boxShadow: "none",
                 borderRadius: 20,
                 padding: "4px 12px",
-                transition: "all 0.25s ease",
+                transition: "all 0.2s ease",
               }}
             >
               {label}
@@ -310,7 +299,7 @@ export default function MenuPage() {
             style={{
               fontFamily: "'Boogaloo', cursive",
               fontSize: "clamp(2.2rem, 5vw, 3.5rem)",
-              color: C.cream,
+              color: "#2c1810",
               lineHeight: 1.1,
             }}
           >
@@ -333,7 +322,7 @@ export default function MenuPage() {
               fontFamily: "'Playfair Display', serif",
               fontStyle: "italic",
               fontSize: "0.85rem",
-              color: "rgba(251,249,244,0.4)",
+              color: "#8b7d6e",
               marginTop: 10,
             }}
           >
@@ -343,7 +332,7 @@ export default function MenuPage() {
             style={{
               width: 60,
               height: 1,
-              background: "rgba(255,255,255,0.08)",
+              background: "#e0d8ca",
               margin: "20px auto",
             }}
           />
@@ -361,9 +350,9 @@ export default function MenuPage() {
                 padding: "10px 28px",
                 borderRadius: 3,
                 cursor: "pointer",
-                border: activeTab === tab ? "none" : "1px solid rgba(255,255,255,0.15)",
+                border: activeTab === tab ? "none" : "1px solid #e0d8ca",
                 background: activeTab === tab ? C.red : "transparent",
-                color: activeTab === tab ? C.white : "rgba(251,249,244,0.5)",
+                color: activeTab === tab ? C.white : "#5c4a3a",
               }}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -425,7 +414,7 @@ export default function MenuPage() {
             style={{
               fontFamily: "'Boogaloo', cursive",
               fontSize: "1.3rem",
-              color: C.cream,
+              color: "#2c1810",
               marginTop: 48,
               marginBottom: 20,
             }}
@@ -436,7 +425,7 @@ export default function MenuPage() {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 12,
-              color: "rgba(251,249,244,0.4)",
+              color: "#8b7d6e",
               marginBottom: 24,
             }}
           >
@@ -469,7 +458,7 @@ export default function MenuPage() {
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: 14,
                     fontWeight: 600,
-                    color: C.cream,
+                    color: "#2c1810",
                     marginTop: 4,
                   }}
                 >

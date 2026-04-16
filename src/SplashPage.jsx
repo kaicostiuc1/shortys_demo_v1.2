@@ -286,7 +286,7 @@ export default function SplashPage() {
           pointerEvents: "none",
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/feTurbulence%3E%3C/svg%3E\")",
-          opacity: 0.045,
+          opacity: 0.055,
           mixBlendMode: "overlay",
         }}
       />
@@ -299,7 +299,7 @@ export default function SplashPage() {
           zIndex: 1,
           pointerEvents: "none",
           background:
-            "radial-gradient(ellipse 70% 40% at 50% 20%, rgba(225,29,72,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse 85% 50% at 50% 18%, rgba(225,29,72,0.13) 0%, transparent 70%)",
         }}
       />
 

@@ -36,9 +36,9 @@ function distanceMiles(lat1, lng1, lat2, lng2) {
 
 const CSS = `
   .order-loc-btn {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(251,249,244,0.8);
+    background: #ffffff;
+    border: 1px solid #e0d8ca;
+    color: #2c1810;
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
     font-weight: 600;
@@ -55,7 +55,7 @@ const CSS = `
     box-sizing: border-box;
   }
   .order-loc-btn:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(225,29,72,0.04);
     border-color: #e11d48;
   }
 `;
@@ -112,32 +112,19 @@ export default function OrderPage() {
         position: "relative",
         minHeight: "100vh",
         overflow: "hidden",
-        backgroundColor: "#0d0804",
+        backgroundColor: "#FBF9F4",
         display: "flex",
         flexDirection: "column",
       }}
     >
       <style>{CSS}</style>
 
-      {/* Grain texture */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/feTurbulence%3E%3C/svg%3E\")",
-          opacity: 0.045,
-          mixBlendMode: "overlay",
-        }}
-      />
-
       {/* Navbar */}
       <nav
         style={{
           width: "100%",
-          background: "transparent",
+          background: "rgba(251,249,244,0.95)",
+          backdropFilter: "blur(8px)",
           padding: "20px 36px",
           display: "flex",
           justifyContent: "space-between",
@@ -177,14 +164,16 @@ export default function OrderPage() {
                 fontSize: 13,
                 fontWeight: 700,
                 letterSpacing: "0.06em",
-                color: hoveredNav === label ? "#ffffff" : active ? C.red : "rgba(251,249,244,0.85)",
+                color: hoveredNav === label ? "#e11d48" : active ? C.red : "#5c4a3a",
                 cursor: onClick ? "pointer" : "default",
                 textDecoration: "none",
                 textTransform: "uppercase",
-                boxShadow: hoveredNav === label ? "0 0 0 1.5px #e11d48" : "none",
+                background: hoveredNav === label ? "rgba(225,29,72,0.06)" : "transparent",
+                border: "none",
+                boxShadow: "none",
                 borderRadius: 20,
                 padding: "4px 12px",
-                transition: "all 0.25s ease",
+                transition: "all 0.2s ease",
               }}
             >
               {label}
@@ -214,7 +203,7 @@ export default function OrderPage() {
           style={{
             fontFamily: "'Boogaloo', cursive",
             fontSize: "clamp(2.5rem, 6vw, 4rem)",
-            color: C.cream,
+            color: "#2c1810",
             lineHeight: 1.1,
           }}
         >
@@ -237,7 +226,7 @@ export default function OrderPage() {
           style={{
             width: 60,
             height: 1,
-            background: "rgba(255,255,255,0.08)",
+            background: "#e0d8ca",
             margin: "24px auto",
           }}
         />
@@ -255,7 +244,7 @@ export default function OrderPage() {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 12,
-              color: "rgba(251,249,244,0.4)",
+              color: "#8b7d6e",
               textTransform: "uppercase",
               letterSpacing: "0.08em",
               marginBottom: 16,
@@ -300,7 +289,7 @@ export default function OrderPage() {
             fontFamily: "'Playfair Display', serif",
             fontStyle: "italic",
             fontSize: "0.9rem",
-            color: "rgba(251,249,244,0.2)",
+            color: "#8b7d6e",
             marginTop: 48,
           }}
         >

@@ -46,30 +46,17 @@ export default function LocationPage({ location }) {
       style={{
         position: "relative",
         minHeight: "100vh",
-        backgroundColor: "#0d0804",
+        backgroundColor: "#FBF9F4",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      {/* Grain texture */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/feTurbulence%3E%3C/svg%3E\")",
-          opacity: 0.045,
-          mixBlendMode: "overlay",
-        }}
-      />
-
       {/* Navbar */}
       <nav
         style={{
           width: "100%",
-          background: "transparent",
+          background: "rgba(251,249,244,0.95)",
+          backdropFilter: "blur(8px)",
           padding: "20px 36px",
           display: "flex",
           justifyContent: "space-between",
@@ -112,14 +99,16 @@ export default function LocationPage({ location }) {
                 fontSize: 13,
                 fontWeight: 700,
                 letterSpacing: "0.06em",
-                color: hoveredNav === label ? "#ffffff" : "rgba(251,249,244,0.85)",
+                color: hoveredNav === label ? "#e11d48" : "#5c4a3a",
                 cursor: "pointer",
                 textDecoration: "none",
                 textTransform: "uppercase",
-                boxShadow: hoveredNav === label ? "0 0 0 1.5px #e11d48" : "none",
+                background: hoveredNav === label ? "rgba(225,29,72,0.06)" : "transparent",
+                border: "none",
+                boxShadow: "none",
                 borderRadius: 20,
                 padding: "4px 12px",
-                transition: "all 0.25s ease",
+                transition: "all 0.2s ease",
               }}
             >
               {label}
@@ -149,7 +138,7 @@ export default function LocationPage({ location }) {
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 12,
-            color: "rgba(251,249,244,0.35)",
+            color: "#8b7d6e",
             cursor: "pointer",
             marginBottom: 16,
             display: "block",
@@ -162,7 +151,7 @@ export default function LocationPage({ location }) {
           style={{
             fontFamily: "'Boogaloo', cursive",
             fontSize: "clamp(3rem, 8vw, 5.5rem)",
-            color: C.cream,
+            color: "#2c1810",
             lineHeight: 1,
             textShadow: "0 0 40px rgba(225,29,72,0.2)",
           }}
@@ -187,7 +176,7 @@ export default function LocationPage({ location }) {
           style={{
             width: 60,
             height: 1,
-            background: "rgba(255,255,255,0.08)",
+            background: "#e0d8ca",
             margin: "20px auto",
           }}
         />
@@ -198,8 +187,8 @@ export default function LocationPage({ location }) {
             maxWidth: 440,
             width: "100%",
             margin: "0 auto",
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.08)",
+            background: "#ffffff",
+            border: "1px solid #e0d8ca",
             borderRadius: 6,
             padding: "28px 32px",
             textAlign: "left",
@@ -222,7 +211,7 @@ export default function LocationPage({ location }) {
               style={{
                 fontFamily: "'Boogaloo', cursive",
                 fontSize: "1.3rem",
-                color: C.cream,
+                color: "#2c1810",
                 marginTop: 4,
               }}
             >
@@ -232,7 +221,7 @@ export default function LocationPage({ location }) {
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 12,
-                color: "rgba(251,249,244,0.4)",
+                color: "#8b7d6e",
               }}
             >
               Open every day
@@ -242,7 +231,7 @@ export default function LocationPage({ location }) {
           <div
             style={{
               height: 1,
-              background: "rgba(255,255,255,0.06)",
+              background: "#e0d8ca",
               marginBottom: 20,
             }}
           />
@@ -265,7 +254,7 @@ export default function LocationPage({ location }) {
                 fontFamily: "'Playfair Display', serif",
                 fontStyle: "italic",
                 fontSize: "1rem",
-                color: "rgba(251,249,244,0.75)",
+                color: "#5c4a3a",
                 marginTop: 4,
                 lineHeight: 1.6,
               }}
@@ -294,7 +283,7 @@ export default function LocationPage({ location }) {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1rem",
-                  color: "rgba(251,249,244,0.65)",
+                  color: "#5c4a3a",
                   marginTop: 4,
                 }}
               >
@@ -329,7 +318,7 @@ export default function LocationPage({ location }) {
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 11,
-                color: "rgba(251,249,244,0.25)",
+                color: "#8b7d6e",
                 marginTop: 10,
               }}
             >
@@ -344,7 +333,7 @@ export default function LocationPage({ location }) {
             fontFamily: "'Playfair Display', serif",
             fontStyle: "italic",
             fontSize: "0.9rem",
-            color: "rgba(251,249,244,0.18)",
+            color: "#8b7d6e",
             marginTop: 64,
             marginBottom: 80,
             maxWidth: 440,
