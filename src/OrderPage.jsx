@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { UtensilsCrossed } from "lucide-react";
 
 const C = {
@@ -70,6 +71,8 @@ const LOCATIONS = [
 ];
 
 export default function OrderPage() {
+  const [hoveredNav, setHoveredNav] = useState(null);
+
   return (
     <div
       style={{
@@ -126,7 +129,7 @@ export default function OrderPage() {
         </div>
         <div style={{ display: "flex", gap: 28 }}>
           {[
-            { label: "Menu", onClick: () => { window.location.href = "/williamsburg#menu"; } },
+            { label: "Menu", onClick: () => { window.location.href = "/menu"; } },
             { label: "About", onClick: () => { window.location.href = "/about"; } },
             { label: "Contact", onClick: () => { window.location.href = "mailto:info@shortysdiners.com"; } },
             { label: "Order", onClick: null, active: true },
@@ -134,15 +137,21 @@ export default function OrderPage() {
             <span
               key={label}
               onClick={onClick || undefined}
+              onMouseEnter={() => setHoveredNav(label)}
+              onMouseLeave={() => setHoveredNav(null)}
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 13,
                 fontWeight: 700,
                 letterSpacing: "0.06em",
-                color: active ? C.red : "rgba(251,249,244,0.85)",
+                color: hoveredNav === label ? "#ffffff" : active ? C.red : "rgba(251,249,244,0.85)",
                 cursor: onClick ? "pointer" : "default",
                 textDecoration: "none",
                 textTransform: "uppercase",
+                boxShadow: hoveredNav === label ? "0 0 0 1.5px #e11d48" : "none",
+                borderRadius: 20,
+                padding: "4px 12px",
+                transition: "all 0.25s ease",
               }}
             >
               {label}
@@ -150,7 +159,6 @@ export default function OrderPage() {
           ))}
         </div>
       </nav>
-      <BWChecker />
 
       {/* Content */}
       <div

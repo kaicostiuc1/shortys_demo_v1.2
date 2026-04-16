@@ -4,12 +4,13 @@ import App from "./App.jsx";
 import CateringPage from "./CateringPage.jsx";
 import SplashPage from "./SplashPage.jsx";
 import OrderPage from "./OrderPage.jsx";
+import MenuPage from "./MenuPage.jsx";
 import "./index.css";
 
 const path = window.location.pathname;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {path === "/catering" ? <CateringPage /> : path === "/" ? <SplashPage /> : path === "/order" ? <OrderPage /> : <App />}
+    {path === "/catering" ? <CateringPage /> : path === "/" ? <SplashPage /> : path === "/order" ? <OrderPage /> : path === "/menu" ? <MenuPage /> : <App />}
   </React.StrictMode>
 );
