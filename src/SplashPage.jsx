@@ -344,10 +344,12 @@ export default function SplashPage() {
                 cursor: "pointer",
                 textDecoration: "none",
                 textTransform: "uppercase",
-                boxShadow: hoveredNav === label ? "0 0 0 1.5px #e11d48" : "none",
+                background: hoveredNav === label ? "rgba(225,29,72,0.12)" : "transparent",
+                border: "none",
+                boxShadow: "none",
                 borderRadius: 20,
                 padding: "4px 12px",
-                transition: "all 0.25s ease",
+                transition: "all 0.2s ease",
               }}
             >
               {label}
