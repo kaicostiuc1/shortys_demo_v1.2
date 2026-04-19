@@ -355,7 +355,6 @@ export default function SplashPage() {
     <div
       style={{
         position: "relative",
-        minHeight: "100vh",
         overflow: "hidden",
         backgroundColor: "#0d0804",
         display: "flex",
@@ -448,12 +447,11 @@ export default function SplashPage() {
         style={{
           position: "relative",
           zIndex: 2,
-          flex: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "72px 20px 60px",
+          padding: "0 20px",
           textAlign: "center",
           minHeight: "100vh",
         }}
@@ -464,7 +462,7 @@ export default function SplashPage() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            padding: "60px 24px 40px",
+            padding: "0 24px",
           }}
         >
           <img src="/shortys-logo.png" style={{ maxWidth: "460px", width: "88%", height: "auto" }} alt="Shorty's Diner" />
