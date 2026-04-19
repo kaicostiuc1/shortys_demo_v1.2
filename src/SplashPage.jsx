@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UtensilsCrossed } from "lucide-react";
 
 const C = {
@@ -109,7 +109,21 @@ const CSS = `
   .loc-card:hover {
     transform: translateY(-3px);
   }
+  @keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 `;
+
+function Checker() {
+  return (
+    <div style={{ display: "flex", width: "100%", height: "14px", overflow: "hidden" }} aria-hidden="true">
+      {Array.from({ length: 50 }).map((_, i) => (
+        <div key={i} style={{ flex: "1 0 14px", height: "14px", background: i % 2 === 0 ? C.red : C.white }} />
+      ))}
+    </div>
+  );
+}
 
 function BWChecker() {
   return (
@@ -260,11 +274,52 @@ function LocationCard({ loc, isNearest, i }) {
   );
 }
 
+const allPosts = [
+  { id: "C4s3zmiuGYj", caption: "French toast done right. Come see us." },
+  { id: "C3iNfyFsT20", caption: "Hot Turkey Monday is back. Come hungry." },
+  { id: "DDUbweBNCFh", caption: "We know where our food comes from. Always have." },
+  { id: "DEAMY_btJKG", caption: "The crew that makes it happen every morning." },
+  { id: "C1SVbKwvs0u", caption: "Mr. & Mrs. Short. Est. 1980. The originals." },
+  { id: "DCGVSARNr9G", caption: "Community table. Always has been." },
+];
+
+const tickerDays = [
+  "Hot Turkey Monday",
+  "Tony's Tuesday Special",
+  "Fried Chicken Livers Wednesday",
+  "Meatloaf Thursday",
+  "Southern Fried Catfish Friday",
+];
+
 export default function SplashPage() {
   const [locationState, setLocationState] = useState("idle");
   const [nearestId, setNearestId] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const [hoveredNav, setHoveredNav] = useState(null);
+  const [selectedPosts, setSelectedPosts] = useState([]);
+
+  useEffect(() => {
+    const shuffled = [...allPosts].sort(() => Math.random() - 0.5);
+    setSelectedPosts(shuffled.slice(0, 2));
+  }, []);
+
+  useEffect(() => {
+    if (selectedPosts.length === 0) return;
+    if (window.instgrm) {
+      window.instgrm.Embeds.process();
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "//www.instagram.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    script.onload = () => {
+      if (window.instgrm) window.instgrm.Embeds.process();
+    };
+    return () => {
+      if (document.body.contains(script)) document.body.removeChild(script);
+    };
+  }, [selectedPosts]);
 
   return (
     <div
@@ -476,7 +531,89 @@ export default function SplashPage() {
         )}
       </div>
 
-      {/* BWChecker at the very bottom */}
+      {/* Gradient transition band */}
+      <div style={{ position: "relative", zIndex: 2, height: 80, background: "linear-gradient(to bottom, #0d0804 0%, #1a0a06 40%, #FBF9F4 100%)" }} />
+
+      {/* Numbers band */}
+      <div style={{ position: "relative", zIndex: 2, background: C.cream, padding: "48px 24px 40px", borderBottom: `1px solid ${C.border}` }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
+          {[
+            { value: "1980", label: "Est." },
+            { value: "4", label: "Locations" },
+            { value: "6am", label: "Every day" },
+            { value: "One", label: "Way of doing it" },
+          ].map((item, i) => (
+            <div key={i} style={{ textAlign: "center", borderRight: i < 3 ? `1px solid ${C.border}` : "none" }}>
+              <div style={{ fontFamily: "'Boogaloo', cursive", fontSize: 38, color: C.red, lineHeight: 1 }}>{item.value}</div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: C.textLight, marginTop: 6 }}>{item.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Specials ticker */}
+      <div style={{ position: "relative", zIndex: 2, background: C.red, padding: "13px 0", overflow: "hidden" }}>
+        <div style={{ display: "flex", width: "max-content", whiteSpace: "nowrap", animation: "tickerScroll 28s linear infinite" }}>
+          {[...tickerDays, ...tickerDays].map((item, i) => (
+            <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "white", padding: "0 32px" }}>{item}</span>
+              <span style={{ display: "inline-block", width: 4, height: 4, borderRadius: "50%", background: "rgba(255,255,255,0.5)", flexShrink: 0 }} />
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Pull quote */}
+      <div style={{ position: "relative", zIndex: 2, background: C.cream, padding: "64px 32px", textAlign: "center" }}>
+        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 72, color: C.red, opacity: 0.4, lineHeight: 0.5, display: "block", marginBottom: 16 }}>"</span>
+        <p style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: 26, color: C.textDark, lineHeight: 1.45, maxWidth: 520, margin: "0 auto 20px" }}>
+          It's not fancy. It's not fat-free. It's just the way it used to be.
+        </p>
+        <div style={{ display: "inline-block", width: 48, height: 2, background: C.red }} />
+      </div>
+
+      {/* Instagram section */}
+      <div style={{ position: "relative", zIndex: 2 }}>
+        <Checker />
+      </div>
+      <div style={{ position: "relative", zIndex: 2, background: C.cream, padding: "56px 24px 60px" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14, marginBottom: 40 }}>
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="6" width="36" height="36" rx="12" stroke="#2c1810" strokeWidth="2.5" fill="none" />
+            <circle cx="24" cy="24" r="9" stroke="#2c1810" strokeWidth="2.5" fill="none" />
+            <circle cx="35.5" cy="12.5" r="2" fill="#2c1810" />
+          </svg>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 700, color: C.textDark }}>@shortysdiner</span>
+            <button
+              onClick={() => window.open("https://www.instagram.com/shortysdiner/", "_blank")}
+              style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: C.red, border: `1.5px solid ${C.red}`, padding: "5px 14px", borderRadius: 2, background: "transparent", cursor: "pointer" }}
+            >
+              Follow
+            </button>
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, maxWidth: 640, margin: "0 auto 32px" }}>
+          {selectedPosts.map((post) => (
+            <div key={post.id} style={{ background: "white", borderRadius: 3, boxShadow: `0 0 0 3px #e11d48, 0 0 0 7px ${C.cream}`, overflow: "hidden" }}>
+              <blockquote
+                className="instagram-media"
+                data-instgrm-permalink={`https://www.instagram.com/p/${post.id}/`}
+                data-instgrm-version="14"
+                style={{ minWidth: 326, width: "100%" }}
+              />
+            </div>
+          ))}
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <button
+            onClick={() => window.open("https://www.instagram.com/shortysdiner/", "_blank")}
+            style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: C.textDark, border: `1.5px solid ${C.border}`, padding: "11px 28px", borderRadius: 2, background: "transparent", cursor: "pointer" }}
+          >
+            See more on Instagram →
+          </button>
+        </div>
+      </div>
       <div style={{ position: "relative", zIndex: 2 }}>
         <BWChecker />
       </div>
