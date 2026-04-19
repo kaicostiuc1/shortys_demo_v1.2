@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { UtensilsCrossed } from "lucide-react";
 
 const C = {
@@ -112,6 +112,17 @@ const CSS = `
   @keyframes tickerScroll {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+  @keyframes chevronBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+  .scroll-chevron {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+  .scroll-chevron:hover {
+    opacity: 1;
   }
 `;
 
@@ -295,6 +306,7 @@ export default function SplashPage() {
   const [nearestId, setNearestId] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const [hoveredNav, setHoveredNav] = useState(null);
+  const numbersRef = useRef(null);
   const [selectedPosts, setSelectedPosts] = useState([]);
 
   const allReviews = [
@@ -440,8 +452,10 @@ export default function SplashPage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
           padding: "72px 20px 60px",
           textAlign: "center",
+          minHeight: "100vh",
         }}
       >
         {/* Hero */}
@@ -547,13 +561,56 @@ export default function SplashPage() {
             ))}
           </div>
         )}
+
+        {/* Scroll chevron */}
+        <button
+          className="scroll-chevron"
+          onClick={() => numbersRef.current?.scrollIntoView({ behavior: "smooth" })}
+          style={{
+            position: "absolute",
+            bottom: 28,
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 4,
+            cursor: "pointer",
+            background: "transparent",
+            border: "none",
+            padding: 0,
+            zIndex: 10,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 10,
+              fontWeight: 800,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: C.cream,
+            }}
+          >
+            Explore
+          </span>
+          <svg
+            width="20"
+            height="12"
+            viewBox="0 0 20 12"
+            fill="none"
+            style={{ animation: "chevronBounce 1.8s ease-in-out infinite" }}
+          >
+            <path d="M1 1L10 10L19 1" stroke="#FBF9F4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
       </div>
 
       {/* Gradient transition band */}
       <div style={{ position: "relative", zIndex: 2, height: 80, background: "linear-gradient(to bottom, #0d0804 0%, #1a0a06 40%, #FBF9F4 100%)" }} />
 
       {/* Numbers band */}
-      <div style={{ position: "relative", zIndex: 2, background: C.cream, padding: "48px 24px 40px", borderBottom: `1px solid ${C.border}` }}>
+      <div ref={numbersRef} style={{ position: "relative", zIndex: 2, background: C.cream, padding: "48px 24px 40px", borderBottom: `1px solid ${C.border}` }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
           {[
             { value: "1980", label: "Est." },
