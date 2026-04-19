@@ -176,7 +176,6 @@ function LocationCard({ loc, isNearest, i }) {
             textTransform: "uppercase",
             padding: "3px 8px",
             borderRadius: 4,
-            animation: "badgePulse 2s ease-in-out infinite",
           }}
         >
           Nearest to you
@@ -298,6 +297,20 @@ export default function SplashPage() {
   const [hoveredNav, setHoveredNav] = useState(null);
   const [selectedPosts, setSelectedPosts] = useState([]);
 
+  const allReviews = [
+    { name: "Fitz D", stars: 5, text: "The food came out in less than a cup of coffee." },
+    { name: "Bnes Dad", stars: 5, text: "French toast I didn't get a pic of because I ate it too fast." },
+    { name: "HawkeyeHawkins1", stars: 5, text: "Old school pancakes with a little bit of a crispy edge, just how pancakes should be. Perfect." },
+    { name: "Winter S.", stars: 5, text: "My kids said if they could leave more than 5 stars they would." },
+    { name: "Michael J.", stars: 5, text: "I wished I had been going here every morning during my vacation." },
+    { name: "Christopher S.", stars: 5, text: "Exactly the kind of spot you hope to find on a trip." },
+    { name: "JF Roth", stars: 5, text: "11 years ago we started coming here and are delighted each time." },
+    { name: "Daniel S.", stars: 5, text: "The atmosphere here is just amazing. Best place for breakfast in Williamsburg." },
+    { name: "Trevs_onit", stars: 5, text: "Bring your appetite. Shorty's Diner is amazing. Simply put." },
+    { name: "Casey R.", stars: 5, text: "Shorty himself even came out to talk to us!" },
+  ];
+  const [selectedReviews, setSelectedReviews] = useState([]);
+
   useEffect(() => {
     const shuffled = [...allPosts].sort(() => Math.random() - 0.5);
     setSelectedPosts(shuffled.slice(0, 2));
@@ -320,6 +333,11 @@ export default function SplashPage() {
       if (document.body.contains(script)) document.body.removeChild(script);
     };
   }, [selectedPosts]);
+
+  useEffect(() => {
+    const shuffled = [...allReviews].sort(() => Math.random() - 0.5);
+    setSelectedReviews(shuffled.slice(0, 3));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div
@@ -563,13 +581,158 @@ export default function SplashPage() {
         </div>
       </div>
 
-      {/* Pull quote */}
-      <div style={{ position: "relative", zIndex: 2, background: C.cream, padding: "64px 32px", textAlign: "center" }}>
-        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 72, color: C.red, opacity: 0.4, lineHeight: 0.5, display: "block", marginBottom: 16 }}>"</span>
-        <p style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", fontSize: 26, color: C.textDark, lineHeight: 1.45, maxWidth: 520, margin: "0 auto 20px" }}>
-          It's not fancy. It's not fat-free. It's just the way it used to be.
-        </p>
-        <div style={{ display: "inline-block", width: 48, height: 2, background: C.red }} />
+      {/* Quote + Reviews */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          background: C.cream,
+          display: "grid",
+          gridTemplateColumns: "1fr 1px 1fr",
+          minHeight: "calc(100vh - 88px - 42px)",
+          width: "100%",
+        }}
+      >
+        {/* Left column — quote */}
+        <div
+          style={{
+            padding: "56px 48px 56px 40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 80,
+              color: C.red,
+              opacity: 0.35,
+              lineHeight: 0.6,
+              display: "block",
+              marginBottom: 20,
+            }}
+          >
+            "
+          </span>
+          <p
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontStyle: "italic",
+              fontSize: 22,
+              color: C.textDark,
+              lineHeight: 1.55,
+              margin: "0 0 28px",
+            }}
+          >
+            It's not fancy. It's not fat-free. It's just the way it used to be.
+          </p>
+          <div style={{ width: 40, height: 2, background: C.red }} />
+        </div>
+
+        {/* Center divider */}
+        <div style={{ margin: "32px 0", background: C.border }} />
+
+        {/* Right column — reviews */}
+        <div
+          style={{
+            padding: "40px 48px 40px 48px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 10,
+              fontWeight: 800,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: C.red,
+              marginBottom: 20,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            From Google Reviews
+            <div style={{ flex: 1, height: 1, background: C.border }} />
+          </div>
+
+          <div>
+            {selectedReviews.map((review, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: "16px 0",
+                  borderBottom: i < selectedReviews.length - 1 ? `1px solid ${C.border}` : "none",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "baseline",
+                    marginBottom: 6,
+                  }}
+                >
+                  <span style={{ fontFamily: "'Boogaloo', cursive", fontSize: 18, color: C.textDark }}>
+                    {review.name}
+                  </span>
+                  <span>
+                    {Array.from({ length: review.stars }).map((_, si) => (
+                      <span
+                        key={si}
+                        style={{
+                          display: "inline-block",
+                          width: 11,
+                          height: 11,
+                          background: C.red,
+                          clipPath: "polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)",
+                          marginRight: 2,
+                        }}
+                      />
+                    ))}
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 13,
+                    color: C.textMid,
+                    lineHeight: 1.55,
+                    fontStyle: "italic",
+                    margin: 0,
+                  }}
+                >
+                  {review.text}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 5 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" />
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+            </svg>
+            <span
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: C.textLight,
+              }}
+            >
+              Verified Google Reviews · Williamsburg, VA
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Instagram section */}
