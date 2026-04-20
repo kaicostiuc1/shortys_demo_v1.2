@@ -359,6 +359,7 @@ export default function SplashPage() {
         backgroundColor: "#0d0804",
         display: "flex",
         flexDirection: "column",
+        minHeight: "100vh",
       }}
     >
       <style>{CSS}</style>
@@ -381,7 +382,10 @@ export default function SplashPage() {
       <div
         style={{
           position: "absolute",
-          inset: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "100vh",
           zIndex: 1,
           pointerEvents: "none",
           background:
@@ -453,7 +457,7 @@ export default function SplashPage() {
           justifyContent: "center",
           padding: "0 20px",
           textAlign: "center",
-          minHeight: "100vh",
+          flex: 1,
         }}
       >
         {/* Hero */}
