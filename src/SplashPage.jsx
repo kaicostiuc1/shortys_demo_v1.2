@@ -457,7 +457,6 @@ export default function SplashPage() {
           justifyContent: "center",
           padding: "0 20px",
           textAlign: "center",
-          flex: 1,
           minHeight: "100vh",
         }}
       >
