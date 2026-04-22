@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import BWChecker from "../components/BWChecker.jsx";
 import LocationCard from "../components/LocationCard.jsx";
+import ReviewsStrip from "../components/ReviewsStrip.jsx";
+import HoursSpecialsBand from "../components/HoursSpecialsBand.jsx";
 import { C, DARK_BG, HEADING_FONT, HERO_FONT, BODY_FONT } from "../lib/brand.js";
 import { LOCATIONS } from "../lib/locations.js";
 
@@ -100,9 +103,13 @@ export default function SplashPage() {
           zIndex: 2,
           paddingTop: "140px",
           paddingBottom: "80px",
-          paddingLeft: "10vw",
-          paddingRight: "6vw",
-          maxWidth: "640px",
+          paddingLeft: "24px",
+          paddingRight: "24px",
+          maxWidth: "720px",
+          margin: "0 auto",
+          textAlign: "center",
+          width: "100%",
+          boxSizing: "border-box",
         }}
       >
         <div
@@ -141,7 +148,6 @@ export default function SplashPage() {
             color: "rgba(251,249,244,0.75)",
             marginTop: "12px",
             marginBottom: 0,
-            maxWidth: "520px",
             lineHeight: 1.4,
           }}
         >
@@ -198,8 +204,132 @@ export default function SplashPage() {
         </div>
       </section>
 
+      <ReviewsStrip />
+      <HoursSpecialsBand />
+
+      {/* About teaser — inline, dark-native */}
+      <section
+        style={{
+          position: "relative",
+          zIndex: 2,
+          padding: "100px 24px 120px",
+          maxWidth: 780,
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: BODY_FONT,
+            fontSize: 11,
+            fontWeight: 800,
+            textTransform: "uppercase",
+            letterSpacing: "0.18em",
+            color: C.red,
+            marginBottom: 20,
+          }}
+        >
+          SINCE 1980
+        </div>
+        <p
+          style={{
+            fontFamily: HERO_FONT,
+            fontStyle: "italic",
+            fontSize: "clamp(1.5rem, 3vw, 2rem)",
+            color: "rgba(251,249,244,0.9)",
+            lineHeight: 1.35,
+            margin: 0,
+          }}
+        >
+          "A diner where a nineteen-year-old sits two booths from a retired couple, and the waitress knows both their orders."
+        </p>
+        <div
+          style={{
+            fontFamily: BODY_FONT,
+            fontSize: 12,
+            textTransform: "uppercase",
+            letterSpacing: "0.15em",
+            color: "rgba(251,249,244,0.5)",
+            marginTop: 24,
+          }}
+        >
+          FOUR LOCATIONS · ONE DINER
+        </div>
+        <Link
+          to="/about"
+          style={{
+            display: "inline-block",
+            marginTop: 36,
+            fontFamily: BODY_FONT,
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.12em",
+            color: C.cream,
+            border: "1.5px solid rgba(251,249,244,0.4)",
+            borderRadius: 2,
+            padding: "13px 24px",
+            textDecoration: "none",
+            transition: "background 0.2s ease, border-color 0.2s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = C.cream;
+            e.currentTarget.style.color = C.textDark;
+            e.currentTarget.style.borderColor = C.cream;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = C.cream;
+            e.currentTarget.style.borderColor = "rgba(251,249,244,0.4)";
+          }}
+        >
+          OUR STORY →
+        </Link>
+      </section>
+
       <div style={{ marginTop: "auto", position: "relative", zIndex: 2 }}>
         <BWChecker />
+      </div>
+
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          background: DARK_BG,
+          padding: "30px 24px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 10,
+          borderTop: "1px solid rgba(251,249,244,0.05)",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: BODY_FONT,
+            fontSize: "0.75rem",
+            color: "rgba(251,249,244,0.4)",
+          }}
+        >
+          © {new Date().getFullYear()} Shorty's Diner · Since 1980
+        </span>
+        <a
+          href="https://instagram.com/shortysdiner"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontFamily: BODY_FONT,
+            fontSize: "0.75rem",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.1em",
+            color: C.red,
+            textDecoration: "none",
+          }}
+        >
+          @shortysdiner →
+        </a>
       </div>
     </div>
   );

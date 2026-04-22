@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SplashPage from "./pages/SplashPage.jsx";
+import LocationPage from "./pages/LocationPage.jsx";
+import { LOCATIONS } from "./lib/locations.js";
 import { C, DARK_BG, HEADING_FONT, BODY_FONT } from "./lib/brand.js";
 import "./index.css";
 
@@ -67,13 +69,17 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SplashPage />} />
-        <Route path="/williamsburg" element={<Placeholder name="Williamsburg" />} />
+        <Route
+          path="/williamsburg"
+          element={<LocationPage location={LOCATIONS.williamsburg} />}
+        />
         <Route path="/yorktown" element={<Placeholder name="Yorktown" />} />
         <Route path="/richmond" element={<Placeholder name="Richmond" />} />
         <Route path="/stlouis" element={<Placeholder name="St. Louis" />} />
         <Route path="/menu" element={<Placeholder name="Menu" />} />
         <Route path="/about" element={<Placeholder name="About" />} />
         <Route path="/order" element={<Placeholder name="Order" />} />
+        <Route path="/catering" element={<Placeholder name="Catering" />} />
         <Route path="/contact" element={<Placeholder name="Contact" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
