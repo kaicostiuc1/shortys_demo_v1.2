@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar.jsx";
 import BWChecker from "../components/BWChecker.jsx";
 import LocationCard from "../components/LocationCard.jsx";
@@ -33,6 +33,8 @@ const GRAIN_URI = `url("data:image/svg+xml;utf8,${encodeURIComponent(GRAIN_SVG)}
 export default function SplashPage() {
   const [nearestId, setNearestId] = useState(null);
   const [nearestDistance, setNearestDistance] = useState(null);
+  const [locationsRevealed, setLocationsRevealed] = useState(false);
+  const hoursRef = useRef(null);
 
   useEffect(() => {
     if (!navigator.geolocation) return;
@@ -101,8 +103,8 @@ export default function SplashPage() {
         style={{
           position: "relative",
           zIndex: 2,
-          paddingTop: "140px",
-          paddingBottom: "80px",
+          paddingTop: "90px",
+          paddingBottom: "36px",
           paddingLeft: "24px",
           paddingRight: "24px",
           maxWidth: "720px",
@@ -131,10 +133,10 @@ export default function SplashPage() {
         <h1
           style={{
             fontFamily: HEADING_FONT,
-            fontSize: "clamp(4rem, 9vw, 7rem)",
+            fontSize: "clamp(3.2rem, 7.5vw, 5.6rem)",
             color: C.cream,
             lineHeight: 0.95,
-            marginTop: "18px",
+            marginTop: "14px",
             marginBottom: 0,
           }}
         >
@@ -144,72 +146,165 @@ export default function SplashPage() {
           style={{
             fontFamily: HERO_FONT,
             fontStyle: "italic",
-            fontSize: "clamp(1.2rem, 2.2vw, 1.5rem)",
+            fontSize: "clamp(1.05rem, 1.9vw, 1.3rem)",
             color: "rgba(251,249,244,0.75)",
-            marginTop: "12px",
+            marginTop: "10px",
             marginBottom: 0,
             lineHeight: 1.4,
           }}
         >
           It's not fancy. It's not fat-free. It's just the way it used to be.
         </p>
-        <div
-          style={{
-            fontFamily: BODY_FONT,
-            fontSize: "12px",
-            textTransform: "uppercase",
-            letterSpacing: "0.15em",
-            color: "rgba(251,249,244,0.5)",
-            marginTop: "24px",
-          }}
-        >
-          CHOOSE A LOCATION BELOW ↓
-        </div>
+        {!locationsRevealed && (
+          <button
+            onClick={() => setLocationsRevealed(true)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              marginTop: 24,
+              background: "transparent",
+              color: C.cream,
+              border: "1.5px solid rgba(251,249,244,0.35)",
+              borderRadius: 2,
+              padding: "13px 26px",
+              fontFamily: BODY_FONT,
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.15em",
+              cursor: "pointer",
+              transition:
+                "background 0.2s ease, color 0.2s ease, border-color 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = C.cream;
+              e.currentTarget.style.color = C.textDark;
+              e.currentTarget.style.borderColor = C.cream;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = C.cream;
+              e.currentTarget.style.borderColor = "rgba(251,249,244,0.35)";
+            }}
+          >
+            SHOW LOCATIONS
+            <span style={{ fontSize: "0.9em", lineHeight: 1 }}>↓</span>
+          </button>
+        )}
       </section>
 
-      {/* LOCATION GRID */}
-      <section
+      {/* LOCATION GRID — revealed on click */}
+      <div
         style={{
+          maxHeight: locationsRevealed ? "2000px" : "0",
+          opacity: locationsRevealed ? 1 : 0,
+          overflow: "hidden",
+          transition: "max-height 0.5s ease, opacity 0.35s ease 0.1s",
           position: "relative",
           zIndex: 2,
-          maxWidth: "1100px",
-          margin: "0 auto",
-          paddingLeft: "10vw",
-          paddingRight: "10vw",
-          paddingBottom: "120px",
-          width: "100%",
-          boxSizing: "border-box",
         }}
       >
-        <div
+        <section
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "20px",
+            position: "relative",
+            maxWidth: "1100px",
+            margin: "0 auto",
+            paddingLeft: "10vw",
+            paddingRight: "10vw",
+            paddingTop: 20,
+            paddingBottom: 80,
+            width: "100%",
+            boxSizing: "border-box",
           }}
         >
-          {order.map((id) => {
-            const loc = LOCATIONS[id];
-            if (!loc) return null;
-            const isNearest = nearestId === id;
-            return (
-              <LocationCard
-                key={id}
-                location={loc}
-                isNearest={isNearest}
-                distance={isNearest ? nearestDistance : null}
-              />
-            );
-          })}
-        </div>
-      </section>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "20px",
+            }}
+          >
+            {order.map((id) => {
+              const loc = LOCATIONS[id];
+              if (!loc) return null;
+              const isNearest = nearestId === id;
+              return (
+                <LocationCard
+                  key={id}
+                  location={loc}
+                  isNearest={isNearest}
+                  distance={isNearest ? nearestDistance : null}
+                />
+              );
+            })}
+          </div>
 
-      <HoursSpecialsBand />
+          <button
+            onClick={() => {
+              if (hoursRef.current) {
+                hoursRef.current.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }}
+            aria-label="Scroll to hours and today's special"
+            style={{
+              position: "absolute",
+              left: 24,
+              bottom: 32,
+              background: C.red,
+              color: C.cream,
+              border: "none",
+              width: 44,
+              height: 44,
+              borderRadius: "50%",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              boxShadow: "0 4px 16px rgba(225,29,72,0.4)",
+              transition:
+                "background 0.2s ease, transform 0.2s ease, opacity 0.4s ease 0.3s",
+              padding: 0,
+              lineHeight: 1,
+              opacity: locationsRevealed ? 1 : 0,
+              pointerEvents: locationsRevealed ? "auto" : "none",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = C.redDark;
+              e.currentTarget.style.transform = "translateY(2px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = C.red;
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
+          </button>
+        </section>
+      </div>
+
+      <div ref={hoursRef}>
+        <HoursSpecialsBand />
+      </div>
       <ReviewsStrip />
 
-      <div style={{ marginTop: "auto", position: "relative", zIndex: 2 }}>
-        <BWChecker />
-      </div>
+      <BWChecker />
 
       <SplashFooter />
     </div>
