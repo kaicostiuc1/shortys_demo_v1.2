@@ -73,9 +73,18 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           path="/williamsburg"
           element={<LocationPage location={LOCATIONS.williamsburg} />}
         />
-        <Route path="/yorktown" element={<Placeholder name="Yorktown" />} />
-        <Route path="/richmond" element={<Placeholder name="Richmond" />} />
-        <Route path="/stlouis" element={<Placeholder name="St. Louis" />} />
+        <Route
+          path="/yorktown"
+          element={<LocationPage location={LOCATIONS.yorktown} />}
+        />
+        <Route
+          path="/richmond"
+          element={<LocationPage location={LOCATIONS.richmond} />}
+        />
+        <Route
+          path="/stlouis"
+          element={<LocationPage location={LOCATIONS.stlouis} />}
+        />
         <Route path="/menu" element={<Placeholder name="Menu" />} />
         <Route path="/about" element={<Placeholder name="About" />} />
         <Route path="/order" element={<Placeholder name="Order" />} />

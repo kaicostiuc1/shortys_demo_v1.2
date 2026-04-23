@@ -28,13 +28,47 @@ export default function HoursSpecialsBand() {
         position: "relative",
         zIndex: 2,
         width: "100%",
-        borderTop: "1px solid rgba(225,29,72,0.25)",
-        borderBottom: "1px solid rgba(225,29,72,0.25)",
         padding: "50px 24px",
         margin: "20px 0",
         boxSizing: "border-box",
       }}
     >
+      <div
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto 40px",
+          display: "flex",
+          alignItems: "center",
+          gap: 14,
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            height: 1,
+            background: "rgba(251,249,244,0.12)",
+          }}
+        />
+        <span
+          style={{
+            fontFamily: BODY_FONT,
+            fontSize: 10,
+            fontWeight: 800,
+            textTransform: "uppercase",
+            letterSpacing: "0.25em",
+            color: "rgba(251,249,244,0.4)",
+          }}
+        >
+          ·
+        </span>
+        <div
+          style={{
+            flex: 1,
+            height: 1,
+            background: "rgba(251,249,244,0.12)",
+          }}
+        />
+      </div>
       <div
         style={{
           maxWidth: "1100px",
@@ -127,6 +161,42 @@ export default function HoursSpecialsBand() {
             )}
           </div>
         )}
+      </div>
+      <div
+        style={{
+          maxWidth: 1100,
+          margin: "40px auto 0",
+          display: "flex",
+          alignItems: "center",
+          gap: 14,
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            height: 1,
+            background: "rgba(251,249,244,0.12)",
+          }}
+        />
+        <span
+          style={{
+            fontFamily: BODY_FONT,
+            fontSize: 10,
+            fontWeight: 800,
+            textTransform: "uppercase",
+            letterSpacing: "0.25em",
+            color: "rgba(251,249,244,0.4)",
+          }}
+        >
+          ·
+        </span>
+        <div
+          style={{
+            flex: 1,
+            height: 1,
+            background: "rgba(251,249,244,0.12)",
+          }}
+        />
       </div>
     </section>
   );

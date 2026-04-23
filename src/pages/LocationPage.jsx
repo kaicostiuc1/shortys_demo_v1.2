@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import Checker from "../components/Checker.jsx";
 import Footer from "../components/Footer.jsx";
-import PhotoStrip from "../components/PhotoStrip.jsx";
+import LocationMap from "../components/LocationMap.jsx";
 import { C, HEADING_FONT, HERO_FONT, BODY_FONT } from "../lib/brand.js";
 
 const eyebrowStyle = {
@@ -20,9 +20,6 @@ export default function LocationPage({ location }) {
   const displayCityState = location.cityState || location.city;
   const toastUrl = location.toastUrl || location.toastOrderUrl || "";
   const telHref = `tel:${(location.phone || "").replace(/[^0-9]/g, "")}`;
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    `${location.address}, ${displayCityState}`
-  )}`;
 
   return (
     <div style={{ background: C.cream, color: C.textDark, minHeight: "100vh" }}>
@@ -260,67 +257,7 @@ export default function LocationPage({ location }) {
             </div>
           </div>
 
-          {/* CELL 2 — FIND US */}
-          <div>
-            <div style={eyebrowStyle}>FIND US</div>
-            <div
-              style={{
-                fontFamily: HEADING_FONT,
-                fontSize: "1.8rem",
-                color: C.textDark,
-                lineHeight: 1.2,
-                marginBottom: "6px",
-              }}
-            >
-              {displayCity}
-            </div>
-            <div
-              style={{
-                fontFamily: HERO_FONT,
-                fontStyle: "italic",
-                fontSize: "1rem",
-                color: C.textMid,
-              }}
-            >
-              {location.address}
-            </div>
-            <div
-              style={{
-                fontFamily: BODY_FONT,
-                fontSize: "0.85rem",
-                color: C.textLight,
-                marginTop: "2px",
-              }}
-            >
-              {displayCityState}
-            </div>
-            <a
-              href={mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-block",
-                marginTop: "10px",
-                fontFamily: BODY_FONT,
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                color: C.red,
-                textDecoration: "none",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.textDecoration = "underline";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.textDecoration = "none";
-              }}
-            >
-              GET DIRECTIONS →
-            </a>
-          </div>
-
-          {/* CELL 3 — CONTACT */}
+          {/* CELL 2 — CONTACT */}
           <div>
             <div style={eyebrowStyle}>CONTACT</div>
             <div
@@ -360,8 +297,9 @@ export default function LocationPage({ location }) {
 
       <Checker />
 
-      {location.flagship && <PhotoStrip />}
-      {location.flagship && <Checker />}
+      <LocationMap location={location} />
+
+      <Checker />
 
       {/* ABOUT TEASER */}
       <section
