@@ -5,7 +5,7 @@ import LocationCard from "../components/LocationCard.jsx";
 import ReviewsStrip from "../components/ReviewsStrip.jsx";
 import HoursSpecialsBand from "../components/HoursSpecialsBand.jsx";
 import SplashFooter from "../components/SplashFooter.jsx";
-import { C, DARK_BG, HEADING_FONT, HERO_FONT, BODY_FONT } from "../lib/brand.js";
+import { C, DARK_BG, HERO_FONT, BODY_FONT } from "../lib/brand.js";
 import { LOCATIONS } from "../lib/locations.js";
 
 const LOCATION_COORDS = {
@@ -115,22 +115,6 @@ export default function SplashPage() {
           boxSizing: "border-box",
         }}
       >
-        <div
-          style={{
-            display: "inline-block",
-            fontFamily: BODY_FONT,
-            fontSize: "11px",
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.15em",
-            color: C.red,
-            border: "1px solid rgba(225,29,72,0.4)",
-            borderRadius: "999px",
-            padding: "4px 12px",
-          }}
-        >
-          EST. 1980 · 4 LOCATIONS
-        </div>
         <h1
           style={{
             position: "absolute",
@@ -151,7 +135,7 @@ export default function SplashPage() {
           alt="Shorty's"
           style={{
             display: "block",
-            marginTop: 14,
+            marginTop: 32,
             marginLeft: "auto",
             marginRight: "auto",
             maxWidth: "min(400px, 58vw)",
@@ -172,7 +156,7 @@ export default function SplashPage() {
             lineHeight: 1.4,
           }}
         >
-          It's not fancy. It's not fat-free. It's just the way it used to be.
+          It's not fancy. It's not fat-free. It's just the way it used to be — since 1980.
         </p>
         {!locationsRevealed && (
           <button
@@ -242,7 +226,7 @@ export default function SplashPage() {
             paddingLeft: "10vw",
             paddingRight: "10vw",
             paddingTop: 20,
-            paddingBottom: 80,
+            paddingBottom: 24,
             width: "100%",
             boxSizing: "border-box",
           }}
@@ -284,7 +268,7 @@ export default function SplashPage() {
               // aligns button left edge with navbar logo left edge
               // (viewport x = 32, compensating for section paddingLeft)
               left: "calc(32px - 10vw)",
-              bottom: 32,
+              bottom: 100,
               background: C.red,
               color: C.cream,
               border: "none",
