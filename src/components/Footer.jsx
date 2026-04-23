@@ -192,7 +192,7 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* COL 4 — HOURS & CONTACT */}
+          {/* COL 4 — HOURS & LOCATIONS */}
           <div>
             <div style={columnHeadingStyle}>HOURS</div>
             <div
@@ -229,37 +229,66 @@ export default function Footer() {
             </div>
 
             <div style={{ ...columnHeadingStyle, marginTop: "24px" }}>
-              CATERING & GROUPS
+              LOCATIONS
             </div>
+            {["williamsburg", "yorktown", "richmond", "stlouis"].map((id) => {
+              const loc = LOCATIONS[id];
+              if (!loc) return null;
+              const cityLabel = loc.name || loc.city;
+              return (
+                <div
+                  key={id}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "8px",
+                    lineHeight: 1.8,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: BODY_FONT,
+                      fontSize: "0.85rem",
+                      fontWeight: 700,
+                      color: C.textDark,
+                    }}
+                  >
+                    {cityLabel}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: BODY_FONT,
+                      fontSize: "0.85rem",
+                      color: C.textMid,
+                    }}
+                  >
+                    {loc.phone}
+                  </span>
+                </div>
+              );
+            })}
             <div
               style={{
                 fontFamily: BODY_FONT,
-                fontSize: "0.9rem",
-                color: C.textMid,
-                lineHeight: 1.6,
-              }}
-            >
-              Williamsburg: (757) 603-6674
-            </div>
-            <div
-              style={{
-                fontFamily: BODY_FONT,
-                fontSize: "0.9rem",
-                color: C.textMid,
-                lineHeight: 1.6,
-              }}
-            >
-              Richmond: (804) 525-5627
-            </div>
-            <div
-              style={{
-                fontFamily: BODY_FONT,
-                fontSize: "0.8rem",
+                fontSize: "0.75rem",
+                fontStyle: "italic",
                 color: C.textLight,
-                marginTop: "6px",
+                lineHeight: 1.5,
+                marginTop: "16px",
               }}
             >
-              catering@shortysdiner.com
+              Catering: Williamsburg (757) 603-6674 · Richmond (804) 525-5627
+            </div>
+            <div
+              style={{
+                fontFamily: BODY_FONT,
+                fontSize: "0.75rem",
+                fontStyle: "italic",
+                color: C.textLight,
+                lineHeight: 1.5,
+              }}
+            >
+              Email: catering@shortysdiner.com
             </div>
           </div>
         </div>

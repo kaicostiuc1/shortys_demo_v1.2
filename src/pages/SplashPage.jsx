@@ -35,6 +35,7 @@ export default function SplashPage() {
   const [nearestDistance, setNearestDistance] = useState(null);
   const [locationsRevealed, setLocationsRevealed] = useState(false);
   const hoursRef = useRef(null);
+  const locationGridRef = useRef(null);
 
   useEffect(() => {
     if (!navigator.geolocation) return;
@@ -132,23 +133,41 @@ export default function SplashPage() {
         </div>
         <h1
           style={{
-            fontFamily: HEADING_FONT,
-            fontSize: "clamp(3.2rem, 7.5vw, 5.6rem)",
-            color: C.cream,
-            lineHeight: 0.95,
-            marginTop: "14px",
-            marginBottom: 0,
+            position: "absolute",
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0,0,0,0)",
+            whiteSpace: "nowrap",
+            border: 0,
           }}
         >
           Shorty's
         </h1>
+        <img
+          src="/shortys-logo.png"
+          alt="Shorty's"
+          style={{
+            display: "block",
+            marginTop: 14,
+            marginLeft: "auto",
+            marginRight: "auto",
+            maxWidth: "min(400px, 58vw)",
+            width: "100%",
+            height: "auto",
+            userSelect: "none",
+          }}
+          draggable={false}
+        />
         <p
           style={{
             fontFamily: HERO_FONT,
             fontStyle: "italic",
             fontSize: "clamp(1.05rem, 1.9vw, 1.3rem)",
             color: "rgba(251,249,244,0.75)",
-            marginTop: "10px",
+            marginTop: "28px",
             marginBottom: 0,
             lineHeight: 1.4,
           }}
@@ -157,7 +176,15 @@ export default function SplashPage() {
         </p>
         {!locationsRevealed && (
           <button
-            onClick={() => setLocationsRevealed(true)}
+            onClick={() => {
+              setLocationsRevealed(true);
+              setTimeout(() => {
+                locationGridRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }, 80);
+            }}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -196,6 +223,7 @@ export default function SplashPage() {
 
       {/* LOCATION GRID — revealed on click */}
       <div
+        ref={locationGridRef}
         style={{
           maxHeight: locationsRevealed ? "2000px" : "0",
           opacity: locationsRevealed ? 1 : 0,
@@ -203,6 +231,7 @@ export default function SplashPage() {
           transition: "max-height 0.5s ease, opacity 0.35s ease 0.1s",
           position: "relative",
           zIndex: 2,
+          scrollMarginTop: 360,
         }}
       >
         <section

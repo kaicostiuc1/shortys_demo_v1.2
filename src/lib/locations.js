@@ -39,7 +39,7 @@ export const LOCATIONS = {
     cityState: "St. Louis, MO 63146",
     neighborhood: "Westport",
     phone: "(314) 392-9232",
-    toastUrl: "",
+    toastUrl: "https://shortysdinerbroad.toast.site/order/shortys-diner-st-louis?diningOption=takeout",
     flagship: false,
     doordashUrl: "https://www.doordash.com/store/shortys-diner-saint-louis-41733676/",
   },

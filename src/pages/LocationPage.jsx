@@ -19,6 +19,7 @@ export default function LocationPage({ location }) {
   const displayCity = location.name || location.city;
   const displayCityState = location.cityState || location.city;
   const toastUrl = location.toastUrl || location.toastOrderUrl || "";
+  const doordashUrl = location.doordashUrl || "";
   const telHref = `tel:${(location.phone || "").replace(/[^0-9]/g, "")}`;
 
   return (
@@ -106,14 +107,14 @@ export default function LocationPage({ location }) {
           </div>
         </div>
 
-        {/* CTA ROW */}
+        {/* CTA STACK */}
         <div
           style={{
             marginTop: "36px",
             display: "flex",
+            flexDirection: "column",
             gap: "12px",
-            justifyContent: "center",
-            flexWrap: "wrap",
+            alignItems: "center",
           }}
         >
           {toastUrl ? (
@@ -124,7 +125,11 @@ export default function LocationPage({ location }) {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "8px",
+                width: "100%",
+                maxWidth: "360px",
+                boxSizing: "border-box",
                 background: C.red,
                 color: C.white,
                 fontFamily: BODY_FONT,
@@ -132,7 +137,7 @@ export default function LocationPage({ location }) {
                 fontWeight: 700,
                 textTransform: "uppercase",
                 letterSpacing: "0.12em",
-                padding: "14px 26px",
+                padding: "13px 26px",
                 borderRadius: "2px",
                 textDecoration: "none",
                 transition: "background 0.2s ease",
@@ -144,28 +149,96 @@ export default function LocationPage({ location }) {
                 e.currentTarget.style.background = C.red;
               }}
             >
-              ORDER FOR PICKUP →
+              ORDER PICKUP →
             </a>
           ) : (
             <span
               style={{
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "8px",
-                background: C.red,
-                color: C.white,
+                width: "100%",
+                maxWidth: "360px",
+                boxSizing: "border-box",
+                background: "transparent",
+                color: C.textLight,
+                border: `1.5px solid ${C.textLight}`,
                 fontFamily: BODY_FONT,
                 fontSize: "0.85rem",
                 fontWeight: 700,
                 textTransform: "uppercase",
                 letterSpacing: "0.12em",
-                padding: "14px 26px",
+                padding: "13px 26px",
                 borderRadius: "2px",
                 opacity: 0.4,
                 cursor: "not-allowed",
               }}
             >
-              ORDERING SOON
+              PICKUP COMING SOON
+            </span>
+          )}
+
+          {doordashUrl ? (
+            <a
+              href={doordashUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                width: "100%",
+                maxWidth: "360px",
+                boxSizing: "border-box",
+                background: C.textDark,
+                color: C.cream,
+                border: `1.5px solid ${C.textDark}`,
+                fontFamily: BODY_FONT,
+                fontSize: "0.85rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.12em",
+                padding: "13px 26px",
+                borderRadius: "2px",
+                textDecoration: "none",
+                transition: "opacity 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "0.85";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "1";
+              }}
+            >
+              ORDER DELIVERY →
+            </a>
+          ) : (
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                width: "100%",
+                maxWidth: "360px",
+                boxSizing: "border-box",
+                background: "transparent",
+                color: C.textLight,
+                border: `1.5px solid ${C.textLight}`,
+                fontFamily: BODY_FONT,
+                fontSize: "0.85rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.12em",
+                padding: "13px 26px",
+                borderRadius: "2px",
+                opacity: 0.4,
+                cursor: "not-allowed",
+              }}
+            >
+              DELIVERY COMING SOON
             </span>
           )}
 
@@ -174,7 +247,11 @@ export default function LocationPage({ location }) {
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "8px",
+              width: "100%",
+              maxWidth: "360px",
+              boxSizing: "border-box",
               background: "transparent",
               color: C.textDark,
               border: `1.5px solid ${C.textDark}`,

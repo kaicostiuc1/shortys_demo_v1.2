@@ -59,7 +59,7 @@ const SERVICE_LIST = [
 
 function DetailColumn({ eyebrow, heading, items }) {
   return (
-    <div>
+    <div style={{ maxWidth: 360, textAlign: "left" }}>
       <div
         style={{
           fontFamily: BODY_FONT,
@@ -292,6 +292,8 @@ export default function EventsPage() {
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
               gap: "40px",
+              justifyItems: "center",
+              justifyContent: "center",
             }}
           >
             <DetailColumn

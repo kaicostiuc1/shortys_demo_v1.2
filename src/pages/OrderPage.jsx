@@ -147,14 +147,16 @@ function OrderCard({ id, isNearest, distance }) {
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
+              width: "100%",
+              boxSizing: "border-box",
               background: C.red,
               color: C.cream,
               fontFamily: BODY_FONT,
-              fontSize: "0.8rem",
+              fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.12em",
-              padding: "11px 18px",
+              padding: "13px 26px",
               borderRadius: "2px",
               textDecoration: "none",
               transition: "background 0.2s",
@@ -175,15 +177,17 @@ function OrderCard({ id, isNearest, distance }) {
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
+              width: "100%",
+              boxSizing: "border-box",
               background: "transparent",
               color: C.textLight,
               border: `1.5px solid ${C.textLight}`,
               fontFamily: BODY_FONT,
-              fontSize: "0.8rem",
+              fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.12em",
-              padding: "11px 18px",
+              padding: "13px 26px",
               borderRadius: "2px",
               opacity: 0.4,
               cursor: "not-allowed",
@@ -203,29 +207,29 @@ function OrderCard({ id, isNearest, distance }) {
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
-              background: "transparent",
-              color: C.textDark,
+              width: "100%",
+              boxSizing: "border-box",
+              background: C.textDark,
+              color: C.cream,
               border: `1.5px solid ${C.textDark}`,
               fontFamily: BODY_FONT,
-              fontSize: "0.8rem",
+              fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.12em",
-              padding: "11px 18px",
+              padding: "13px 26px",
               borderRadius: "2px",
               textDecoration: "none",
-              transition: "background 0.2s, color 0.2s",
+              transition: "opacity 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = C.textDark;
-              e.currentTarget.style.color = C.cream;
+              e.currentTarget.style.opacity = "0.85";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = C.textDark;
+              e.currentTarget.style.opacity = "1";
             }}
           >
-            DELIVERY VIA DOORDASH →
+            ORDER DELIVERY →
           </a>
         ) : (
           <span
@@ -234,15 +238,17 @@ function OrderCard({ id, isNearest, distance }) {
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
+              width: "100%",
+              boxSizing: "border-box",
               background: "transparent",
               color: C.textLight,
               border: `1.5px solid ${C.textLight}`,
               fontFamily: BODY_FONT,
-              fontSize: "0.8rem",
+              fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.12em",
-              padding: "11px 18px",
+              padding: "13px 26px",
               borderRadius: "2px",
               opacity: 0.4,
               cursor: "not-allowed",
@@ -302,7 +308,7 @@ export default function OrderPage() {
           padding: "60px 24px 100px",
         }}
       >
-        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div
             style={{
               display: "grid",
