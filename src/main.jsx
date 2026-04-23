@@ -3,48 +3,14 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SplashPage from "./pages/SplashPage.jsx";
 import LocationPage from "./pages/LocationPage.jsx";
+import MenuPage from "./pages/MenuPage.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
+import OrderPage from "./pages/OrderPage.jsx";
+import ContactPage from "./pages/ContactPage.jsx";
+import CateringPage from "./pages/CateringPage.jsx";
+import EventsPage from "./pages/EventsPage.jsx";
 import { LOCATIONS } from "./lib/locations.js";
-import { C, DARK_BG, HEADING_FONT, BODY_FONT } from "./lib/brand.js";
 import "./index.css";
-
-function Placeholder({ name }) {
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        width: "100%",
-        background: DARK_BG,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        color: C.cream,
-      }}
-    >
-      <h1
-        style={{
-          fontFamily: HEADING_FONT,
-          fontSize: "clamp(3rem, 8vw, 6rem)",
-          margin: 0,
-          lineHeight: 1,
-        }}
-      >
-        {name}
-      </h1>
-      <p
-        style={{
-          fontFamily: BODY_FONT,
-          fontStyle: "italic",
-          fontSize: "1rem",
-          opacity: 0.6,
-          marginTop: "16px",
-        }}
-      >
-        coming soon
-      </p>
-    </div>
-  );
-}
 
 function NotFound() {
   return (
@@ -85,11 +51,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           path="/stlouis"
           element={<LocationPage location={LOCATIONS.stlouis} />}
         />
-        <Route path="/menu" element={<Placeholder name="Menu" />} />
-        <Route path="/about" element={<Placeholder name="About" />} />
-        <Route path="/order" element={<Placeholder name="Order" />} />
-        <Route path="/catering" element={<Placeholder name="Catering" />} />
-        <Route path="/contact" element={<Placeholder name="Contact" />} />
+        <Route path="/menu" element={<MenuPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/order" element={<OrderPage />} />
+        <Route path="/events" element={<EventsPage />} />
+        <Route path="/catering" element={<CateringPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

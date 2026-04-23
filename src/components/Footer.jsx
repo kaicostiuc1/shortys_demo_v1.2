@@ -7,6 +7,7 @@ const EXPLORE_LINKS = [
   { label: "Menu", to: "/menu" },
   { label: "About", to: "/about" },
   { label: "Order", to: "/order" },
+  { label: "Events", to: "/events" },
   { label: "Catering", to: "/catering" },
   { label: "Contact", to: "/contact" },
 ];

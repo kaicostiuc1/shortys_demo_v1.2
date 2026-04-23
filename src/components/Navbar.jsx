@@ -6,6 +6,7 @@ const LINKS = [
   { label: "Menu", to: "/menu" },
   { label: "About", to: "/about" },
   { label: "Order", to: "/order" },
+  { label: "Events", to: "/events" },
   { label: "Contact", to: "/contact" },
 ];
 

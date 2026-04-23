@@ -252,7 +252,9 @@ export default function SplashPage() {
             aria-label="Scroll to hours and today's special"
             style={{
               position: "absolute",
-              left: 24,
+              // aligns button left edge with navbar logo left edge
+              // (viewport x = 32, compensating for section paddingLeft)
+              left: "calc(32px - 10vw)",
               bottom: 32,
               background: C.red,
               color: C.cream,

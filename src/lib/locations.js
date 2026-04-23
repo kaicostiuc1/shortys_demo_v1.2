@@ -8,6 +8,7 @@ export const LOCATIONS = {
     phone: "(757) 253-1080",
     flagship: true,
     toastOrderUrl: "https://order.toasttab.com/online/shortys-diner-627-merrimac-trl",
+    doordashUrl: "https://www.doordash.com/store/shortys-diner-williamsburg-460667/2140855/",
   },
   yorktown: {
     id: "yorktown",
@@ -18,6 +19,7 @@ export const LOCATIONS = {
     phone: "(757) 867-8777",
     flagship: false,
     toastOrderUrl: "https://order.toasttab.com/online/shortys-diner-yorktown-6500-george-washington-memorial-highway",
+    doordashUrl: "https://www.doordash.com/store/shortys-diner-yorktown-24714824/",
   },
   richmond: {
     id: "richmond",
@@ -28,6 +30,7 @@ export const LOCATIONS = {
     phone: "(804) 308-2070",
     flagship: false,
     toastOrderUrl: "https://shortysdinerbroad.toast.site/order/shortys-diner-rva-5625-west-broad-street",
+    doordashUrl: "https://www.doordash.com/store/shortys-diner-rva-richmond-1532498/",
   },
   stlouis: {
     id: "stlouis",
@@ -38,5 +41,6 @@ export const LOCATIONS = {
     phone: "(314) 392-9232",
     toastUrl: "",
     flagship: false,
+    doordashUrl: "https://www.doordash.com/store/shortys-diner-saint-louis-41733676/",
   },
 };
